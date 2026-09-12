@@ -1,9 +1,9 @@
-﻿(() => {
+(() => {
   "use strict";
 
   // --- BACKEND API CONFIGURATION ---
-  // Local development backend address
-  const API_BASE = "http://localhost:3001";
+  // Same-origin backend address (dev and production)
+  const API_BASE = "";
 
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
