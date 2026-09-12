@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dev Pandey — Tech Enthusiast &amp; Developer</title>
+  <meta name="description" content="Dev Pandey is a tech enthusiast and developer building thoughtful, well-crafted products. Selected work, skills, and contact." />
+
+  <!-- Metric-compatible substitutes for aeonikPro / Untitled Sans / dotDigital —
+       see DESIGN.md and README.md for swapping in the licensed fonts. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/contact.css" />
+  <link rel="stylesheet" href="css/floating-dock.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Cinematic curtain-open on first load; instantly hidden under reduced motion -->
+  <div class="curtain" aria-hidden="true">
+    <span class="curtain-panel curtain-panel--left"></span>
+    <span class="curtain-panel curtain-panel--right"></span>
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="site-header" data-site-header>
+    <div class="site-header-inner">
+      <a href="#top" class="logo">
+        <span class="logo-badge" aria-hidden="true">
+          <span class="logo-badge-text">DP</span>
+        </span>
+        <span class="logo-text">Dev Pandey</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <span class="nav-indicator" aria-hidden="true"></span>
+        <a href="work.html">Work</a>
+        <a href="#skills">Skills</a>
+        <a href="about.html">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="[RESUME_URL]">Résumé</a>
+        <span class="nav-divider" aria-hidden="true"></span>
+        <a class="btn-icon" href="[GITHUB_URL]" aria-label="GitHub profile" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================ HERO ============================ -->
+    <section class="hero has-bg" id="top">
+      <div class="section-bg" data-parallax="0.06" aria-hidden="true">
+        <video
+          class="section-bg-video"
+          poster="assets/video/hero-bg-poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="auto"
+        >
+          <source src="assets/video/hero-bg.webm" type="video/webm" />
+          <source src="assets/video/hero-bg.mp4" type="video/mp4" />
+        </video>
+        <div class="section-bg-overlay"></div>
+      </div>
+      <div class="bg-spotlight" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="eyebrow-row hero-eyebrow">
+          <span class="eyebrow">Available for select engagements</span>
+        </div>
+
+        <h1 class="gradient-text">Dev Pandey</h1>
+
+        <p class="hero-role" aria-live="polite">
+          <span class="hero-role-prefix">Currently building</span>
+          <span class="hero-role-text" data-typewriter='["thoughtful web apps.", "precise design systems.", "AI-assisted tools.", "things that ship."]'></span><span class="hero-role-cursor" aria-hidden="true"></span>
+        </p>
+
+        <p class="hero-tagline">
+          Tech enthusiast &amp; developer crafting thoughtful digital products — precise interfaces, considered
+          motion, and code that holds up in production.
+        </p>
+
+        <div class="hero-cta-row">
+          <a class="btn btn-ghost" href="work.html">View selected work</a>
+          <a class="btn btn-outline" href="#contact">Start a conversation</a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="value" data-count-to="4" data-count-suffix="+">0</span>
+            <span class="label">Years building</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="value" data-count-to="8">0</span>
+            <span class="label">Projects shipped</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="value" data-count-to="12" data-count-suffix="+">0</span>
+            <span class="label">Technologies used</span>
+          </div>
+        </div>
+
+        <div class="hero-cards">
+          <a class="hero-card hero-card--left" href="work.html" aria-label="View selected work — Project Alpha">
+            <div class="hero-card-tilt">
+              <div class="hero-card-row">
+                <span class="hero-card-title">Project Alpha</span>
+                <span class="hero-card-status" aria-hidden="true"></span>
+              </div>
+              <div class="hero-card-line" aria-hidden="true"></div>
+              <div class="hero-card-line short" aria-hidden="true"></div>
+            </div>
+          </a>
+          <a class="hero-card hero-card--center" href="work.html" aria-label="View selected work — Now shipping">
+            <div class="hero-card-tilt">
+              <div class="hero-card-row">
+                <span class="hero-card-title">Now shipping</span>
+                <span class="hero-card-status" aria-hidden="true"></span>
+              </div>
+              <div class="hero-card-line" aria-hidden="true"></div>
+              <div class="hero-card-line" aria-hidden="true"></div>
+              <div class="hero-card-line short" aria-hidden="true"></div>
+            </div>
+          </a>
+          <a class="hero-card hero-card--right" href="work.html" aria-label="View selected work — Project Beta">
+            <div class="hero-card-tilt">
+              <div class="hero-card-row">
+                <span class="hero-card-title">Project Beta</span>
+                <span class="hero-card-status" aria-hidden="true"></span>
+              </div>
+              <div class="hero-card-line" aria-hidden="true"></div>
+              <div class="hero-card-line short" aria-hidden="true"></div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <a class="hero-scroll-cue" href="#skills" aria-label="Scroll to skills section">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 4v15M6 13l6 6 6-6"/></svg>
+      </a>
+    </section>
+
+    <!-- ============================ SKILLS ============================ -->
+    <section class="section has-bg" id="skills">
+      <div class="section-bg" data-parallax="0.05" aria-hidden="true">
+        <video
+          class="section-bg-video"
+          poster="assets/video/skills-bg-poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+        >
+          <source src="assets/video/skills-bg.webm" type="video/webm" />
+          <source src="assets/video/skills-bg.mp4" type="video/mp4" />
+        </video>
+        <div class="section-bg-overlay"></div>
+      </div>
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">Extensible by design</span>
+          </div>
+          <h2>A stack built for clarity</h2>
+          <p>The tools I reach for most, and what I use each one for.</p>
+        </div>
+
+        <div class="skills-row" data-reveal>
+          <div class="skill">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><path d="M8 6 3 12l5 6M16 6l5 6-5 6"/></svg>
+            </div>
+            <span class="skill-label">Frontend&nbsp;Engineering</span>
+          </div>
+          <div class="skill">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg>
+            </div>
+            <span class="skill-label">Design&nbsp;Systems</span>
+          </div>
+          <div class="skill">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <span class="skill-label">API&nbsp;Integration</span>
+          </div>
+          <div class="skill">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><path d="M3 20V10M9 20V4M15 20v-7M21 20V8"/></svg>
+            </div>
+            <span class="skill-label">Performance</span>
+          </div>
+          <div class="skill">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg>
+            </div>
+            <span class="skill-label">Data&nbsp;Modeling</span>
+          </div>
+          <div class="skill">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+            </div>
+            <span class="skill-label">Cross-platform</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CONTACT ============================ -->
+    <section class="section has-bg" id="contact">
+      <div class="section-bg" data-parallax="0.05" aria-hidden="true">
+        <video
+          class="section-bg-video"
+          poster="assets/video/contact-bg-poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+        >
+          <source src="assets/video/contact-bg.webm" type="video/webm" />
+          <source src="assets/video/contact-bg.mp4" type="video/mp4" />
+        </video>
+        <div class="section-bg-overlay"></div>
+      </div>
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">Shine bright, get in touch</span>
+          </div>
+          <h2>Let's build something</h2>
+          <p>Have a project in mind, or just want to talk shop? I read every message.</p>
+        </div>
+
+        <div class="contact-layout" data-reveal>
+          <div class="contact-info">
+            <div class="contact-availability">
+              <span class="status-dot" aria-hidden="true"></span>
+              <div>
+                <span class="contact-availability-title">Available for select engagements</span>
+                <span class="contact-availability-meta">Usually replies within 24 hours</span>
+              </div>
+            </div>
+
+            <div class="contact-clock" data-contact-clock>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+              <span data-contact-clock-text>—</span>
+            </div>
+
+            <ul class="contact-methods">
+              <li>
+                <a class="contact-method" href="mailto:[EMAIL]" data-copy-email data-email="[EMAIL]">
+                  <span class="contact-method-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/></svg>
+                  </span>
+                  <span class="contact-method-body">
+                    <span class="contact-method-label">Email</span>
+                    <span class="contact-method-value">[EMAIL]</span>
+                  </span>
+                  <span class="contact-method-action" data-copy-hint>Copy</span>
+                </a>
+              </li>
+              <li>
+                <a class="contact-method" href="[LINKEDIN_URL]" target="_blank" rel="noopener">
+                  <span class="contact-method-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="4"/><path d="M7.5 10.5V17M7.5 7.5v.01M11.5 17v-4.2c0-1.8 1-2.8 2.5-2.8s2.5 1 2.5 2.9V17"/></svg>
+                  </span>
+                  <span class="contact-method-body">
+                    <span class="contact-method-label">LinkedIn</span>
+                    <span class="contact-method-value">Connect with me</span>
+                  </span>
+                  <span class="contact-method-action">Open</span>
+                </a>
+              </li>
+              <li>
+                <a class="contact-method" href="[GITHUB_URL]" target="_blank" rel="noopener">
+                  <span class="contact-method-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+                  </span>
+                  <span class="contact-method-body">
+                    <span class="contact-method-label">GitHub</span>
+                    <span class="contact-method-value">See my code</span>
+                  </span>
+                  <span class="contact-method-action">Open</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="modal-card contact-card">
+            <div data-contact-form-wrap>
+              <form id="contact-form" novalidate>
+                <div class="contact-reason-row">
+                  <span class="contact-reason-label" id="contact-reason-label">What's this about?</span>
+                  <div class="contact-reason-chips" role="radiogroup" aria-labelledby="contact-reason-label">
+                    <button type="button" class="reason-chip is-selected" data-reason="Project inquiry" role="radio" aria-checked="true">Project inquiry</button>
+                    <button type="button" class="reason-chip" data-reason="Collaboration" role="radio" aria-checked="false">Collaboration</button>
+                    <button type="button" class="reason-chip" data-reason="Just saying hi" role="radio" aria-checked="false">Just saying hi</button>
+                  </div>
+                  <input type="hidden" name="reason" id="contact-reason" value="Project inquiry" />
+                </div>
+
+                <div class="field-floating">
+                  <input id="name" name="name" type="text" placeholder=" " required autocomplete="name" />
+                  <label for="name">Name</label>
+                  <span class="field-error" data-error-for="name">Please enter your name.</span>
+                </div>
+
+                <div class="field-floating">
+                  <input id="email" name="email" type="email" placeholder=" " required autocomplete="email" />
+                  <label for="email">Email</label>
+                  <span class="field-error" data-error-for="email">Enter a valid email address.</span>
+                </div>
+
+                <div class="field-floating">
+                  <textarea id="message" name="message" placeholder=" " required maxlength="600"></textarea>
+                  <label for="message">Message</label>
+                  <span class="field-counter" data-char-counter><span data-char-count>0</span>/600</span>
+                  <span class="field-error" data-error-for="message">Tell me a little about the project.</span>
+                </div>
+
+                <button class="btn btn-cta contact-submit" type="submit">
+                  <span class="contact-submit-label">Send message</span>
+                  <svg class="contact-submit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </button>
+                <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+              </form>
+
+              <div class="contact-success" data-contact-success hidden>
+                <div class="contact-success-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m5 13 4 4L19 7"/></svg>
+                </div>
+                <h3>Message sent</h3>
+                <p>Thanks for reaching out — I'll get back to you within a day or two.</p>
+                <button type="button" class="btn btn-outline" data-contact-reset>Send another message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-meta">© <span id="current-year">2026</span> Dev Pandey. All rights reserved.</span>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="[GITHUB_URL]" target="_blank" rel="noopener">GitHub</a>
+        <a href="[LINKEDIN_URL]" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:[EMAIL]">Email</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+
+  <!-- ============================ FLOATING DOCK ============================ -->
+  <div class="floating-dock" data-floating-dock>
+    <nav class="floating-dock-desktop" aria-label="Quick navigation">
+      <a class="floating-dock-icon" href="#top" aria-label="Home" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10.5V20a1 1 0 0 0 1 1h4v-6a2 2 0 1 1 4 0v6h4a1 1 0 0 0 1-1v-9.5"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Home</span>
+      </a>
+      <a class="floating-dock-icon" href="work.html" aria-label="Work">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M2 13h20"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Work</span>
+      </a>
+      <a class="floating-dock-icon" href="#skills" aria-label="Skills">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Skills</span>
+      </a>
+      <a class="floating-dock-icon" href="about.html" aria-label="About">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">About</span>
+      </a>
+      <a class="floating-dock-icon" href="#contact" aria-label="Contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Contact</span>
+      </a>
+      <a class="floating-dock-icon" href="[RESUME_URL]" aria-label="Résumé">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Résumé</span>
+      </a>
+      <a class="floating-dock-icon" href="[GITHUB_URL]" aria-label="GitHub profile" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">GitHub</span>
+      </a>
+    </nav>
+
+    <div class="floating-dock-mobile">
+      <div class="floating-dock-mobile-items" id="floating-dock-mobile-items">
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">GitHub</span>
+          <a class="floating-dock-icon" href="[GITHUB_URL]" aria-label="GitHub profile" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Résumé</span>
+          <a class="floating-dock-icon" href="[RESUME_URL]" aria-label="Résumé">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Contact</span>
+          <a class="floating-dock-icon" href="#contact" aria-label="Contact">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">About</span>
+          <a class="floating-dock-icon" href="about.html" aria-label="About">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Skills</span>
+          <a class="floating-dock-icon" href="#skills" aria-label="Skills">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Work</span>
+          <a class="floating-dock-icon" href="work.html" aria-label="Work">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M2 13h20"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Home</span>
+          <a class="floating-dock-icon" href="#top" aria-label="Home" aria-current="page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10.5V20a1 1 0 0 0 1 1h4v-6a2 2 0 1 1 4 0v6h4a1 1 0 0 0 1-1v-9.5"/></svg>
+          </a>
+        </div>
+      </div>
+      <button class="floating-dock-mobile-toggle" aria-label="Open quick navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="js/floating-dock.js"></script>
+</body>
+</html>

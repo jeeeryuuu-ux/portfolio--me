@@ -1,0 +1,434 @@
+/* ==========================================================================
+   CONTACT — two-column "get in touch" layout: an info card (availability,
+   local time, quick-connect methods) beside an enhanced form (reason chips,
+   floating labels, inline validation, a proper success state).
+   ========================================================================== */
+
+.contact-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--spacing-24);
+  margin-top: var(--spacing-56);
+}
+
+@media (min-width: 900px) {
+  .contact-layout {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: var(--spacing-32);
+  }
+}
+
+/* ---- Left column — availability, local time, quick-connect ---------------- */
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .contact-info {
+    flex: 0 0 320px;
+    padding-top: var(--spacing-4);
+  }
+}
+
+.contact-availability {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-12);
+  padding: var(--spacing-16);
+  border-radius: var(--radius-cards);
+  background: var(--surface-frosted-glass);
+  box-shadow: var(--shadow-subtle-3);
+}
+
+.contact-availability .status-dot {
+  flex-shrink: 0;
+  margin-top: 5px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-deep-teal);
+  box-shadow: 0 0 8px var(--color-deep-teal);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact-availability .status-dot {
+    animation: status-pulse 2.2s ease-in-out infinite;
+  }
+}
+
+.contact-availability-title {
+  display: block;
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-pure-white);
+}
+
+.contact-availability-meta {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--text-caption);
+  color: var(--color-fog-veil);
+}
+
+.contact-clock {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  padding-inline: var(--spacing-4);
+  font-family: var(--font-dotdigital);
+  font-size: var(--text-body-sm);
+  color: var(--color-moon-mist);
+  font-feature-settings: "tnum" on;
+}
+
+.contact-clock svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--color-blueprint-blue);
+}
+
+.contact-methods {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  margin: 0;
+  padding: 0;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  padding: var(--spacing-12);
+  border-radius: var(--radius-cards);
+  background: rgba(199, 211, 234, 0.04);
+  box-shadow: var(--shadow-subtle);
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-glass),
+    transform var(--duration-fast) var(--ease-glass);
+}
+
+.contact-method:hover,
+.contact-method:focus-visible {
+  background: rgba(186, 214, 247, 0.1);
+  transform: translateX(4px);
+}
+
+.contact-method-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(186, 214, 247, 0.08);
+  color: var(--color-frost-glow);
+  flex-shrink: 0;
+}
+
+.contact-method-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.contact-method-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-method-label {
+  font-size: var(--text-caption);
+  color: var(--color-fog-veil);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.contact-method-value {
+  font-size: var(--text-body-sm);
+  color: var(--color-ice-highlight);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.contact-method-action {
+  flex-shrink: 0;
+  font-size: var(--text-caption);
+  color: var(--color-fog-veil);
+  min-width: 44px;
+  text-align: right;
+  transition: color var(--duration-fast) var(--ease-glass);
+}
+
+.contact-method:hover .contact-method-action,
+.contact-method:focus-visible .contact-method-action {
+  color: var(--color-blueprint-blue);
+}
+
+/* ---- Right column — the form card ----------------------------------------- */
+
+.contact-card {
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .contact-card {
+    flex: 0 0 460px;
+  }
+}
+
+/* ---- Reason chips ----------------------------------------------------------- */
+
+.contact-reason-row {
+  margin-bottom: var(--spacing-20);
+}
+
+.contact-reason-label {
+  display: block;
+  margin-bottom: var(--spacing-8);
+  font-size: var(--text-caption);
+  color: var(--color-moon-mist);
+}
+
+.contact-reason-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8);
+}
+
+.reason-chip {
+  padding: var(--spacing-4) var(--spacing-12);
+  border-radius: var(--radius-buttons);
+  border: 1px solid var(--color-glass-edge);
+  background: rgba(199, 211, 234, 0.04);
+  color: var(--color-fog-veil);
+  font-family: var(--font-untitled-sans);
+  font-size: var(--text-caption);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-glass),
+    color var(--duration-fast) var(--ease-glass),
+    border-color var(--duration-fast) var(--ease-glass);
+}
+
+.reason-chip:hover {
+  background: rgba(186, 214, 247, 0.08);
+  color: var(--color-ice-highlight);
+}
+
+.reason-chip:focus-visible {
+  outline: 2px solid var(--color-blueprint-blue);
+  outline-offset: 2px;
+}
+
+.reason-chip.is-selected {
+  background: var(--color-void-violet);
+  border-color: var(--color-void-violet);
+  color: var(--color-pure-white);
+}
+
+/* ---- Floating-label fields --------------------------------------------------- */
+
+.field-floating {
+  position: relative;
+  margin-bottom: var(--spacing-24);
+}
+
+.field-floating input,
+.field-floating textarea {
+  width: 100%;
+  border-radius: var(--radius-inputs);
+  background: rgba(199, 211, 234, 0.06);
+  box-shadow: var(--shadow-subtle);
+  color: var(--color-pure-white);
+  padding: var(--spacing-16) var(--spacing-12) var(--spacing-8);
+  font-family: var(--font-untitled-sans);
+  font-size: var(--text-body);
+  transition: box-shadow var(--duration-fast) var(--ease-glass);
+}
+
+.field-floating textarea {
+  resize: vertical;
+  min-height: 110px;
+  padding-top: var(--spacing-20);
+}
+
+.field-floating input:focus,
+.field-floating textarea:focus {
+  box-shadow: var(--shadow-subtle-9), 0 0 0 1px var(--color-void-violet) inset;
+  outline: none;
+}
+
+.field-floating label {
+  position: absolute;
+  left: var(--spacing-12);
+  top: 15px;
+  color: rgba(199, 211, 234, 0.55);
+  font-size: var(--text-body);
+  pointer-events: none;
+  transform-origin: left top;
+  transition: transform var(--duration-fast) var(--ease-glass),
+    color var(--duration-fast) var(--ease-glass),
+    top var(--duration-fast) var(--ease-glass);
+}
+
+.field-floating input:focus + label,
+.field-floating input:not(:placeholder-shown) + label,
+.field-floating textarea:focus + label,
+.field-floating textarea:not(:placeholder-shown) + label {
+  top: -9px;
+  padding: 0 4px;
+  background: var(--surface-deep-glass);
+  color: var(--color-blueprint-blue);
+  transform: scale(0.82);
+}
+
+.field-counter {
+  position: absolute;
+  top: var(--spacing-8);
+  right: var(--spacing-12);
+  font-size: var(--text-caption);
+  color: var(--color-fog-veil);
+  font-feature-settings: "tnum" on;
+  pointer-events: none;
+}
+
+.field-counter.is-near-limit {
+  color: var(--color-ember-glow);
+}
+
+.field-error {
+  display: block;
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+  font-size: var(--text-caption);
+  color: var(--color-ember-glow);
+  opacity: 0;
+  transition: max-height var(--duration-fast) var(--ease-glass),
+    opacity var(--duration-fast) var(--ease-glass),
+    margin-top var(--duration-fast) var(--ease-glass);
+}
+
+.field-floating.has-error input,
+.field-floating.has-error textarea {
+  box-shadow: var(--shadow-subtle), 0 0 0 1px var(--color-ember-glow) inset;
+}
+
+.field-floating.has-error .field-error {
+  max-height: 32px;
+  margin-top: var(--spacing-4);
+  opacity: 1;
+}
+
+/* ---- Submit button ------------------------------------------------------------ */
+
+.contact-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+}
+
+.contact-submit-icon {
+  width: 16px;
+  height: 16px;
+  transition: transform var(--duration-base) var(--ease-glass);
+}
+
+.contact-submit:hover .contact-submit-icon {
+  transform: translateX(3px);
+}
+
+.contact-submit:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.contact-submit:disabled .contact-submit-icon {
+  transform: none;
+}
+
+/* ---- Success panel ------------------------------------------------------------ */
+
+.contact-success {
+  text-align: center;
+  padding-block: var(--spacing-24);
+}
+
+.contact-success-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto var(--spacing-16);
+  border-radius: 50%;
+  background: rgba(38, 150, 132, 0.15);
+  color: var(--color-deep-teal);
+  box-shadow: 0 0 24px rgba(38, 150, 132, 0.25);
+}
+
+.contact-success-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .contact-success-icon {
+    animation: contact-success-pop var(--duration-slow) var(--ease-glass);
+  }
+}
+
+@keyframes contact-success-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.contact-success h3 {
+  margin-bottom: var(--spacing-8);
+  font-family: var(--font-aeonikpro);
+  color: var(--color-pure-white);
+}
+
+.contact-success p {
+  margin-bottom: var(--spacing-20);
+  font-size: var(--text-body-sm);
+  color: var(--color-moon-mist);
+}
+
+.form-status {
+  font-size: var(--text-body-sm);
+  color: var(--color-deep-teal);
+  margin-top: var(--spacing-12);
+  min-height: 20px;
+}
+
+.form-status[data-tone="error"] {
+  color: var(--color-ember-glow);
+}
+
+.form-status[data-tone="success"] {
+  color: var(--color-deep-teal);
+}

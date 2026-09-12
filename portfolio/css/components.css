@@ -1,0 +1,274 @@
+/* ==========================================================================
+   COMPONENTS — per DESIGN.md "Components" section
+   ========================================================================== */
+
+/* ---- Buttons ----------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-8);
+  font-family: var(--font-untitled-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-body-sm);
+  white-space: nowrap;
+  transition: background var(--duration-fast) var(--ease-glass),
+    box-shadow var(--duration-fast) var(--ease-glass),
+    transform var(--duration-fast) var(--ease-glass);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Pill Button — Primary Ghost */
+.btn-ghost {
+  border-radius: var(--radius-buttons);
+  padding: var(--spacing-8) var(--spacing-16);
+  background: rgba(186, 214, 247, 0.06);
+  color: var(--color-pure-white);
+  box-shadow: var(--shadow-subtle);
+}
+
+.btn-ghost:hover {
+  background: rgba(186, 214, 247, 0.12);
+}
+
+/* Pill Button — Outlined */
+.btn-outline {
+  border-radius: var(--radius-buttons);
+  padding: var(--spacing-8) var(--spacing-16);
+  background: transparent;
+  color: var(--color-frost-glow);
+  box-shadow: var(--shadow-subtle);
+}
+
+.btn-outline:hover {
+  background: rgba(186, 214, 247, 0.06);
+}
+
+/* Violet CTA — reserved for form-submit actions only, per spec */
+.btn-cta {
+  border-radius: var(--radius-inputs);
+  padding: var(--spacing-12) var(--spacing-24);
+  background: var(--color-void-violet);
+  color: var(--color-pure-white);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-body);
+  width: 100%;
+}
+
+.btn-cta:hover {
+  background: var(--color-void-violet-hover);
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-iconcontainers);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(186, 214, 247, 0.06);
+  box-shadow: var(--shadow-subtle);
+  color: var(--color-frost-glow);
+}
+
+.btn-icon:hover {
+  background: rgba(186, 214, 247, 0.12);
+}
+
+.btn-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ---- Badge / Tag -------------------------------------------------------- */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-badges);
+  background: rgba(199, 211, 234, 0.12);
+  box-shadow: var(--shadow-subtle-9);
+  color: var(--color-frost-glow);
+  padding: var(--spacing-4) var(--spacing-8);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ---- Section eyebrow — flanked by fading hairlines ---------------------- */
+
+.eyebrow-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-16);
+  margin-bottom: var(--spacing-16);
+}
+
+.eyebrow-row::before,
+.eyebrow-row::after {
+  content: '';
+  height: 1px;
+  width: clamp(24px, 8vw, 96px);
+  background: linear-gradient(90deg, transparent, rgba(186, 215, 247, 0.12), transparent);
+}
+
+.eyebrow {
+  font-family: var(--font-dotdigital);
+  font-size: var(--text-body-sm);
+  font-weight: var(--font-weight-regular);
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-moon-mist);
+  font-feature-settings: "tnum" on;
+  white-space: nowrap;
+}
+
+.section-heading {
+  text-align: center;
+  max-width: 640px;
+  margin-inline: auto;
+}
+
+.section-heading h2,
+.section-heading h3 {
+  margin-bottom: var(--spacing-16);
+  background: var(--gradient-ice-highlight);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.section-heading p {
+  font-size: var(--text-subheading);
+  color: var(--color-moon-mist);
+}
+
+/* ---- Glass Card (Feature) ------------------------------------------------ */
+
+.glass-card {
+  border-radius: var(--radius-cards);
+  background: var(--surface-frosted-glass);
+  box-shadow: var(--elevation-card);
+  padding: var(--card-padding);
+}
+
+/* ---- Auth-Form-style Modal Card (reused for the contact form) ----------- */
+
+.modal-card {
+  border-radius: var(--radius-modals);
+  background: var(--surface-deep-glass);
+  box-shadow: var(--elevation-modal);
+  padding: var(--spacing-32) var(--spacing-24);
+}
+
+@media (min-width: 640px) {
+  .modal-card {
+    padding: var(--spacing-32);
+  }
+}
+
+/* ---- Text Input ----------------------------------------------------------- */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  margin-bottom: var(--spacing-16);
+}
+
+.field label {
+  font-size: var(--text-caption);
+  color: var(--color-moon-mist);
+}
+
+.field input,
+.field textarea {
+  border-radius: var(--radius-inputs);
+  background: rgba(199, 211, 234, 0.06);
+  box-shadow: var(--shadow-subtle);
+  color: var(--color-pure-white);
+  padding: var(--spacing-12) var(--spacing-12);
+  font-size: var(--text-body);
+  transition: box-shadow var(--duration-fast) var(--ease-glass);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 96px;
+  font-family: var(--font-untitled-sans);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: rgba(199, 211, 234, 0.6);
+}
+
+.field input:focus,
+.field textarea:focus {
+  box-shadow: var(--shadow-subtle-9);
+  outline: none;
+}
+
+/* ---- Feature Icon Tile ---------------------------------------------------- */
+
+.icon-tile {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-iconcontainers);
+  background: rgba(186, 214, 247, 0.06);
+  box-shadow: var(--shadow-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-frost-glow);
+}
+
+.icon-tile svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+}
+
+/* ---- Segmented pill toggle (grid / list view) ---------------------------- */
+
+.segmented {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-buttons);
+  background: rgba(186, 214, 247, 0.03);
+  box-shadow: var(--shadow-subtle-3);
+  padding: 4px;
+  height: 32px;
+  gap: 2px;
+}
+
+.segmented button {
+  height: 24px;
+  padding-inline: var(--spacing-12);
+  border-radius: var(--radius-buttons);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  font-size: var(--text-caption);
+  color: var(--color-moon-mist);
+  transition: background var(--duration-fast) var(--ease-glass), color var(--duration-fast) var(--ease-glass);
+}
+
+.segmented button[aria-pressed="true"] {
+  background: rgba(186, 214, 247, 0.12);
+  color: var(--color-pure-white);
+}
+
+.segmented svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+}

@@ -1,0 +1,360 @@
+/* ==========================================================================
+   ANIMATIONS — restrained: a page-load reveal on the hero, a scroll-triggered
+   fade-up for section content, hover micro-interactions only elsewhere.
+   ========================================================================== */
+
+/* ---- Curtain-open — the page's one signature entrance moment -------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .curtain-panel {
+    animation: curtain-open 900ms 260ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+  .curtain-panel--left {
+    transform-origin: left center;
+  }
+  .curtain-panel--right {
+    transform-origin: right center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain {
+    display: none;
+  }
+}
+
+@keyframes curtain-open {
+  0% {
+    transform: scaleX(1);
+  }
+  100% {
+    transform: scaleX(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(20px) scale(0.98);
+    transition: opacity var(--duration-slow) var(--ease-glass),
+      transform var(--duration-slow) var(--ease-glass),
+      filter var(--duration-slow) var(--ease-glass);
+  }
+
+  [data-reveal].is-visible {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+
+  /* Project cards cascade in, one after another, once the grid is revealed */
+  .work-grid[data-reveal] .project-card {
+    opacity: 0;
+  }
+
+  .work-grid[data-reveal].is-visible .project-card {
+    animation: card-cascade-in var(--duration-slow) var(--ease-glass) forwards;
+  }
+
+  .work-grid[data-reveal].is-visible .project-card:nth-child(1) { animation-delay: 60ms; }
+  .work-grid[data-reveal].is-visible .project-card:nth-child(2) { animation-delay: 150ms; }
+  .work-grid[data-reveal].is-visible .project-card:nth-child(3) { animation-delay: 240ms; }
+  .work-grid[data-reveal].is-visible .project-card:nth-child(4) { animation-delay: 330ms; }
+  .work-grid[data-reveal].is-visible .project-card:nth-child(5) { animation-delay: 420ms; }
+  .work-grid[data-reveal].is-visible .project-card:nth-child(6) { animation-delay: 510ms; }
+  .work-grid[data-reveal].is-visible .project-card:nth-child(7) { animation-delay: 600ms; }
+  .work-grid[data-reveal].is-visible .project-card:nth-child(8) { animation-delay: 690ms; }
+}
+
+@keyframes card-cascade-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-eyebrow,
+  .hero h1,
+  .hero-role,
+  .hero-tagline,
+  .hero-cta-row,
+  .hero-stats {
+    opacity: 0;
+    animation: hero-fade-up var(--duration-slow) var(--ease-glass) forwards;
+  }
+
+  .hero-eyebrow {
+    animation-delay: 80ms;
+  }
+  .hero h1 {
+    animation-delay: 180ms;
+  }
+  .hero-role {
+    animation-delay: 260ms;
+  }
+  .hero-tagline {
+    animation-delay: 320ms;
+  }
+  .hero-cta-row {
+    animation-delay: 420ms;
+  }
+  .hero-stats {
+    animation-delay: 500ms;
+  }
+
+  .hero-card {
+    opacity: 0;
+  }
+
+  .hero-card--left {
+    animation: card-float-in var(--duration-slow) var(--ease-glass) forwards 480ms,
+      card-bob 5.5s ease-in-out infinite 1.1s;
+  }
+  .hero-card--center {
+    animation: card-float-in var(--duration-slow) var(--ease-glass) forwards 560ms,
+      card-bob 6.5s ease-in-out infinite 1.2s;
+  }
+  .hero-card--right {
+    animation: card-float-in var(--duration-slow) var(--ease-glass) forwards 520ms,
+      card-bob 6s ease-in-out infinite 1.15s;
+  }
+}
+
+@keyframes card-bob {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+/* ---- Hero wordmark — slow light sweep across the gradient fill ----------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero h1.gradient-text {
+    background: linear-gradient(
+      100deg,
+      #98c0ef 20%,
+      #ffffff 50%,
+      #98c0ef 80%
+    );
+    background-size: 220% 100%;
+    /* `background` is a shorthand — it silently resets background-clip to
+       border-box even though it's never mentioned here. Re-declare both
+       explicitly or the sweep gradient paints the whole box instead of
+       being clipped to the letters. */
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: hero-fade-up var(--duration-slow) var(--ease-glass) forwards 180ms,
+      wordmark-sweep 7s ease-in-out infinite 1.4s;
+  }
+}
+
+@keyframes wordmark-sweep {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ---- Hero role line — blinking typewriter cursor -------------------------- */
+
+@keyframes cursor-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* ---- Hero scroll cue — gentle bounce -------------------------------------- */
+
+@keyframes scroll-cue-bounce {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(6px);
+  }
+}
+
+/* ---- Logo badge — spinning conic-gradient ring ---------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .logo-badge::before {
+    animation: logo-ring-spin 6s linear infinite;
+  }
+}
+
+@keyframes logo-ring-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---- Hero-card status dot — signals "live" -------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-card-status {
+    animation: status-pulse 2.2s ease-in-out infinite;
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 4px var(--color-deep-teal);
+    opacity: 0.8;
+  }
+  50% {
+    box-shadow: 0 0 10px var(--color-deep-teal);
+    opacity: 1;
+  }
+}
+
+/* ---- Skill tiles — staggered reveal + hover lift -------------------------- */
+
+.skill {
+  transition: transform var(--duration-base) var(--ease-glass);
+}
+
+.skill:hover {
+  transform: translateY(-4px);
+}
+
+.skill:hover .icon-tile {
+  background: rgba(186, 214, 247, 0.12);
+  box-shadow: var(--shadow-subtle-9);
+}
+
+.icon-tile {
+  transition: background var(--duration-fast) var(--ease-glass),
+    box-shadow var(--duration-fast) var(--ease-glass);
+}
+
+.skills-row[data-reveal].is-visible .skill {
+  animation: skill-fade-up var(--duration-base) var(--ease-glass) backwards;
+}
+
+.skills-row .skill:nth-child(1) { animation-delay: 40ms; }
+.skills-row .skill:nth-child(2) { animation-delay: 100ms; }
+.skills-row .skill:nth-child(3) { animation-delay: 160ms; }
+.skills-row .skill:nth-child(4) { animation-delay: 220ms; }
+.skills-row .skill:nth-child(5) { animation-delay: 280ms; }
+.skills-row .skill:nth-child(6) { animation-delay: 340ms; }
+
+@keyframes skill-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Nav links — sliding spotlight indicator (see .nav-indicator in
+   layout.css); no per-link hover styling needed here anymore. ------------- */
+
+/* ---- Project card badges — brighten slightly when the card is hovered ---- */
+
+.badge {
+  transition: box-shadow var(--duration-fast) var(--ease-glass);
+}
+
+.project-card:hover .badge {
+  box-shadow: var(--shadow-subtle-9), 0 0 8px rgba(186, 214, 247, 0.15);
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-float-in {
+  from {
+    opacity: 0;
+    transform: translateX(var(--tx, -50%)) translateY(calc(var(--ty, 0px) + 20px)) rotate(var(--rot, 0deg)) scale(var(--scale, 1));
+  }
+  to {
+    opacity: 1;
+    transform: translateX(var(--tx, -50%)) translateY(var(--ty, 0px)) rotate(var(--rot, 0deg)) scale(var(--scale, 1));
+  }
+}
+
+.hero-card--left {
+  --tx: calc(-50% - 220px);
+  --rot: -6deg;
+}
+.hero-card--center {
+  --tx: -50%;
+  --ty: -16px;
+  --scale: 1.08;
+}
+.hero-card--right {
+  --tx: calc(-50% + 220px);
+  --rot: 6deg;
+}
+
+@media (max-width: 760px) {
+  .hero-card--left {
+    --tx: calc(-50% - 118px);
+    --scale: 0.9;
+  }
+  .hero-card--center {
+    --ty: -12px;
+    --scale: 0.98;
+  }
+  .hero-card--right {
+    --tx: calc(-50% + 118px);
+    --scale: 0.9;
+  }
+}
+
+/* ---- Cinematic section-background photography — slow Ken Burns drift ----
+   Scale lives on the <img> itself; scroll parallax (translateY, driven from
+   main.js) is applied to the parent .section-bg wrapper instead, so the two
+   transforms never fight over the same element's `transform` property. */
+
+@media (prefers-reduced-motion: no-preference) {
+  .section-bg-img.is-loaded,
+  .section-bg-video.is-loaded {
+    animation: bg-ken-burns 24s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes bg-ken-burns {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.09);
+  }
+}

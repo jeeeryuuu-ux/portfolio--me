@@ -1,0 +1,214 @@
+/* ==========================================================================
+   BASE — reset, root element, typography primitives
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--color-midnight-canvas);
+  color: var(--color-moon-mist);
+  font-family: var(--font-untitled-sans);
+  font-size: var(--text-body);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
+  font-weight: var(--font-weight-regular);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100svh;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input {
+  font: inherit;
+  color: inherit;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+/* ---- Headings -------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-aeonikpro);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-ice-highlight);
+}
+
+h1 {
+  font-size: var(--text-display-hero);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: var(--text-heading-lg);
+  line-height: var(--leading-heading-lg);
+}
+
+h3 {
+  font-size: var(--text-heading);
+  line-height: var(--leading-heading);
+}
+
+h4 {
+  font-size: var(--text-heading-sm);
+  line-height: var(--leading-heading-sm);
+  letter-spacing: var(--tracking-heading-sm);
+}
+
+p {
+  color: var(--color-moon-mist);
+}
+
+/* ---- Utility text colors, per the spec's luminous progression -------- */
+
+.text-headline {
+  color: var(--color-ice-highlight);
+}
+
+.text-body-primary {
+  color: var(--color-frost-glow);
+}
+
+.text-muted {
+  color: var(--color-moon-mist);
+}
+
+.text-helper {
+  color: var(--color-fog-veil);
+}
+
+.gradient-text {
+  /* Base, readable fill FIRST — this is what every browser paints by
+     default. The clip-to-text trick below only ever *enhances* this. */
+  color: var(--color-ice-highlight);
+}
+
+/* Progressive enhancement: only switch to a transparent fill (which
+   would render as fully invisible text on any engine that doesn't
+   support the clip) once we've confirmed background-clip: text is
+   actually supported. This is the piece that was missing — the old
+   rule set `color: transparent` unconditionally, so any browser/
+   webview/renderer without background-clip support (or a moment
+   where the property fails silently) painted "Dev Pandey" with a
+   fully transparent fill and no visible fallback. */
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+  .gradient-text {
+    background: var(--gradient-ice-highlight);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent; /* older WebKit/iOS Safari reads this, not `color` */
+  }
+}
+
+/* ---- Focus state — visible everywhere, styled to the glass system ---- */
+
+:focus-visible {
+  outline: 2px solid var(--color-blueprint-blue);
+  outline-offset: 3px;
+  border-radius: var(--radius-inputs);
+}
+
+/* ---- Layout primitives ------------------------------------------------ */
+
+.container {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding-inline: var(--spacing-24);
+}
+
+.section {
+  position: relative;
+  padding-block: var(--spacing-120);
+}
+
+@media (max-width: 640px) {
+  .section {
+    padding-block: var(--spacing-56);
+  }
+  .container {
+    padding-inline: var(--spacing-20);
+  }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--spacing-16);
+  top: -60px;
+  background: var(--color-midnight-canvas);
+  color: var(--color-pure-white);
+  padding: var(--spacing-12) var(--spacing-16);
+  border-radius: var(--radius-inputs);
+  box-shadow: var(--shadow-subtle);
+  z-index: 100;
+  transition: top var(--duration-base) var(--ease-glass);
+}
+
+.skip-link:focus {
+  top: var(--spacing-16);
+}

@@ -1,0 +1,274 @@
+/* ==========================================================================
+   MACBOOK SCROLL — a scroll-linked "open the laptop" showpiece for About.
+   Pure CSS + vanilla JS port (no React/framer dependency) so it drops into
+   the existing static-site pipeline. Sizing is fluid via --ms-w so it never
+   needs the fixed-px + whole-block-scale trick the original demo uses.
+   ========================================================================== */
+
+.ms-scene {
+  --ms-w: clamp(230px, 46vw, 512px);
+  --ms-lid-h: calc(var(--ms-w) * 0.375);
+  --ms-screen-h: calc(var(--ms-w) * 0.75);
+  --ms-base-h: calc(var(--ms-w) * 0.6875);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 170vh;
+  padding-top: var(--spacing-56);
+  perspective: 900px;
+}
+
+@media (min-width: 768px) {
+  .ms-scene {
+    padding-top: var(--spacing-120);
+  }
+}
+
+/* ---- Fading hint copy, synced to scroll progress by JS ------------------ */
+
+.ms-heading {
+  margin-bottom: var(--spacing-56);
+  text-align: center;
+  font-family: var(--font-dotdigital);
+  font-size: var(--text-body-sm);
+  letter-spacing: var(--eyebrow-tracking);
+  text-transform: uppercase;
+  color: var(--color-fog-veil);
+  will-change: transform, opacity;
+}
+
+.ms-heading span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+/* ---- Lid ----------------------------------------------------------------- */
+
+.ms-lid {
+  position: relative;
+  width: var(--ms-w);
+  height: var(--ms-screen-h);
+  perspective: 900px;
+}
+
+.ms-lid-closed {
+  position: relative;
+  width: var(--ms-w);
+  height: var(--ms-lid-h);
+  border-radius: var(--radius-cards);
+  background: #010101;
+  padding: 6px;
+  transform: perspective(900px) rotateX(-25deg) translateZ(0);
+  transform-origin: bottom;
+  transform-style: preserve-3d;
+}
+
+.ms-lid-closed-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: #010101;
+  box-shadow: 0 2px 0 2px #171717 inset;
+}
+
+.ms-lid-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-family: var(--font-aeonikpro);
+  font-size: 9px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  color: var(--color-ice-highlight);
+  background: var(--color-midnight-canvas);
+  box-shadow: 0 0 0 1px var(--color-glass-edge);
+}
+
+.ms-lid-screen {
+  position: absolute;
+  inset: 0;
+  width: var(--ms-w);
+  height: var(--ms-screen-h);
+  border-radius: var(--radius-cards);
+  background: #010101;
+  padding: 6px;
+  transform-style: preserve-3d;
+  transform-origin: top;
+  will-change: transform;
+  /* Sane no-JS / pre-scroll default: lid tipped back, small, matches the
+     progress = 0 state that the scroll handler will otherwise apply. */
+  transform: scaleX(1.2) scaleY(0.6) rotateX(-28deg) translateY(0px);
+}
+
+.ms-lid-screen-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  background: #16171a;
+}
+
+/* ---- Screen video — plays the showcase clip full-bleed ------------------ */
+
+.ms-screen-video-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #0b0d16;
+}
+
+.ms-screen-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---- Base ------------------------------------------------------------- */
+
+.ms-base {
+  position: relative;
+  z-index: -1;
+  width: var(--ms-w);
+  height: var(--ms-base-h);
+  overflow: hidden;
+  border-radius: var(--radius-cards);
+  background: #232427;
+}
+
+.ms-base-hinge {
+  position: relative;
+  height: calc(var(--ms-w) * 0.02);
+  width: 100%;
+}
+
+.ms-base-hinge span {
+  position: absolute;
+  inset-inline: 0;
+  margin-inline: auto;
+  height: 4px;
+  width: 80%;
+  background: #050505;
+}
+
+.ms-base-row {
+  display: flex;
+}
+
+.ms-speaker-grid {
+  flex: 0 0 10%;
+  height: calc(var(--ms-w) * 0.25);
+  margin-top: 8px;
+  background-image: radial-gradient(circle, #08080a 0.5px, transparent 0.5px);
+  background-size: 3px 3px;
+}
+
+.ms-keyboard {
+  flex: 0 0 80%;
+  margin-inline: auto;
+  padding: 4px;
+  border-radius: 6px;
+  background: #050505;
+}
+
+.ms-kb-row {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 2px;
+}
+
+.ms-key {
+  flex: 1;
+  height: 15px;
+  padding: 0.5px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 6px 0 rgba(255, 255, 255, 0.4);
+}
+
+.ms-key-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-radius: 3.5px;
+  background: #0a090d;
+  box-shadow: 0 -0.5px 2px 0 #0d0d0f inset, -0.5px 0 2px 0 #0d0d0f inset;
+  font-family: var(--font-dotdigital);
+  font-size: 5px;
+  line-height: 1;
+  color: #ddd;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.ms-key--wide {
+  flex-grow: 2.4;
+}
+
+.ms-key--space {
+  flex-grow: 12;
+}
+
+.ms-key--blank {
+  background: transparent;
+  box-shadow: none;
+}
+
+.ms-trackpad {
+  margin: 6px auto;
+  width: 40%;
+  height: calc(var(--ms-w) * 0.2);
+  border-radius: 10px;
+  box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.13) inset;
+}
+
+.ms-base-lip {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  margin-inline: auto;
+  height: 6px;
+  width: 40px;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(0deg, #050505, #272729);
+}
+
+.ms-base-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(5, 6, 15, 0.6);
+  color: var(--color-frost-glow);
+  font-family: var(--font-dotdigital);
+  font-size: 7px;
+  letter-spacing: 0.04em;
+}
+
+/* ---- Reduced motion: show a calm, fully-open static state --------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ms-scene {
+    min-height: 0;
+    padding-block: var(--spacing-56);
+  }
+  .ms-heading {
+    display: none;
+  }
+  .ms-lid-screen {
+    transform: scaleX(1) scaleY(1) rotateX(0deg) translateY(0px);
+  }
+}

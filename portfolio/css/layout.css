@@ -1,0 +1,979 @@
+/* ==========================================================================
+   LAYOUT — page chrome, hero, and section-specific composition
+   ========================================================================== */
+
+/* ---- Ambient background: blueprint grid + spotlight halo ---------------- */
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(186, 215, 247, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(186, 215, 247, 0.06) 1px, transparent 1px);
+  background-size: 88px 88px;
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 85%);
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 85%);
+}
+
+.bg-spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 640px;
+  z-index: -1;
+  pointer-events: none;
+  background: conic-gradient(
+    at 50% -5%,
+    transparent 45%,
+    rgba(124, 145, 182, 0.3) 49%,
+    rgba(124, 145, 182, 0.5) 50%,
+    rgba(124, 145, 182, 0.3) 51%,
+    transparent 55%
+  );
+  opacity: 0.6;
+}
+
+/* Cinematic glide, not delayed scrolling: the actual page scroll stays 100%
+   native/instant (no JS ever intercepts the wheel or the scrollbar), but the
+   transform these decorative background layers are given each frame is
+   allowed to ease into place over ~280ms. The content under your cursor
+   responds immediately; only the ambient backdrop trails it slightly. */
+@media (prefers-reduced-motion: no-preference) {
+  .bg-grid,
+  .bg-spotlight,
+  .section-bg {
+    transition: transform 280ms linear;
+  }
+}
+
+/* ---- Cinematic curtain-open (first load only) ----------------------------- */
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: none;
+  display: flex;
+}
+
+.curtain-panel {
+  flex: 1;
+  background: var(--color-midnight-canvas);
+  box-shadow: rgba(186, 215, 247, 0.1) 0px 0px 40px 0px;
+}
+
+/* ---- Scroll progress ---------------------------------------------------- */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 90;
+  background: transparent;
+  pointer-events: none;
+}
+
+.scroll-progress span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--gradient-ice-highlight);
+  box-shadow: 0 0 8px rgba(216, 236, 248, 0.6);
+}
+
+/* ---- Header / nav — floating glass pill that morphs on scroll ------------ */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  padding: var(--spacing-16) var(--spacing-16) 0;
+  pointer-events: none;
+  transition: padding var(--duration-base) var(--ease-glass);
+}
+
+/* Soft top-down scrim — keeps the transparent, unscrolled header legible
+   over the hero's bg-spotlight glow without reintroducing a hard-edged bar.
+   Fades out once the header morphs into its own glass pill on scroll. */
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 180px;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(5, 6, 15, 0.8), rgba(5, 6, 15, 0));
+  opacity: 1;
+  transition: opacity var(--duration-base) var(--ease-glass);
+}
+
+.site-header.is-scrolled::before {
+  opacity: 0;
+}
+
+.site-header.is-scrolled {
+  padding-top: var(--spacing-8);
+}
+
+.site-header-inner {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  max-width: var(--page-max-width);
+  margin-inline: auto;
+  padding: var(--spacing-16) var(--spacing-24);
+  border-radius: var(--radius-buttons);
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  transition: max-width var(--duration-base) var(--ease-glass),
+    padding var(--duration-base) var(--ease-glass),
+    background var(--duration-base) var(--ease-glass),
+    border-color var(--duration-base) var(--ease-glass),
+    box-shadow var(--duration-base) var(--ease-glass);
+}
+
+.site-header.is-scrolled .site-header-inner {
+  max-width: 900px;
+  padding: var(--spacing-8) var(--spacing-20);
+  background: var(--surface-frosted-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: var(--color-glass-edge);
+  box-shadow: var(--elevation-modal);
+}
+
+.logo {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-untitled-sans);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--text-body);
+  color: var(--color-frost-glow);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.logo:hover .logo-text {
+  color: var(--color-pure-white);
+}
+
+.logo-text {
+  transition: color var(--duration-fast) var(--ease-glass);
+}
+
+.logo-badge {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: transform var(--duration-base) var(--ease-glass);
+}
+
+.logo:hover .logo-badge {
+  transform: scale(1.08);
+}
+
+.logo-badge::before {
+  content: '';
+  position: absolute;
+  inset: -1.5px;
+  z-index: -1;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 0deg,
+    var(--color-void-violet),
+    var(--color-blueprint-blue),
+    var(--color-deep-teal),
+    var(--color-void-violet)
+  );
+}
+
+.logo-badge::after {
+  content: '';
+  position: absolute;
+  inset: 1.5px;
+  z-index: -1;
+  border-radius: 50%;
+  background: var(--color-midnight-canvas);
+}
+
+.logo-badge-text {
+  font-family: var(--font-aeonikpro);
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  color: var(--color-ice-highlight);
+}
+
+.nav-links {
+  position: relative;
+  display: none;
+  align-items: center;
+  gap: var(--spacing-4);
+  font-size: var(--text-body-sm);
+  color: var(--color-moon-mist);
+}
+
+.nav-links a {
+  position: relative;
+  z-index: 1;
+  padding: var(--spacing-8) var(--spacing-16);
+  border-radius: var(--radius-buttons);
+  transition: color var(--duration-fast) var(--ease-glass);
+}
+
+.nav-links a:hover {
+  color: var(--color-pure-white);
+}
+
+.nav-links a[aria-current="page"] {
+  color: var(--color-pure-white);
+}
+
+.nav-indicator {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  z-index: 0;
+  height: 32px;
+  width: var(--indicator-w, 0px);
+  border-radius: var(--radius-buttons);
+  background: rgba(186, 214, 247, 0.1);
+  box-shadow: var(--shadow-subtle-9);
+  opacity: 0;
+  transform: translateY(-50%) translateX(var(--indicator-x, 0px));
+  transition: transform var(--duration-base) var(--ease-glass),
+    width var(--duration-base) var(--ease-glass),
+    opacity var(--duration-fast) var(--ease-glass);
+  pointer-events: none;
+}
+
+.nav-indicator.is-visible {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-indicator {
+    transition: opacity var(--duration-fast) linear;
+  }
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.nav-actions .btn-ghost {
+  display: none;
+}
+
+.nav-divider {
+  display: none;
+  width: 1px;
+  height: 20px;
+  background: var(--color-glass-edge);
+}
+
+@media (min-width: 860px) {
+  .nav-links {
+    display: flex;
+  }
+  .nav-actions .btn-ghost {
+    display: inline-flex;
+  }
+  .nav-divider {
+    display: block;
+  }
+}
+
+/* ---- Hero ------------------------------------------------------------------ */
+
+.hero {
+  position: relative;
+  padding-block: var(--spacing-100) var(--spacing-56);
+  overflow: hidden;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-eyebrow {
+  margin-bottom: var(--spacing-24);
+}
+
+.hero h1 {
+  font-family: var(--font-aeonikpro);
+}
+
+/* Cursor-tracked ambient glow — follows the pointer across the whole hero */
+.hero-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    560px circle at var(--glow-x, 50%) var(--glow-y, 30%),
+    rgba(102, 58, 243, 0.22),
+    rgba(2, 125, 234, 0.08) 45%,
+    transparent 70%
+  );
+  transition: opacity var(--duration-base) var(--ease-glass);
+}
+
+.hero-glow.is-active {
+  opacity: 1;
+}
+
+/* Rotating "currently building" line — typewriter-style, monospace */
+.hero-role {
+  margin-top: var(--spacing-16);
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--spacing-8);
+  font-family: var(--font-dotdigital);
+  font-size: var(--text-body-sm);
+  color: var(--color-fog-veil);
+}
+
+.hero-role-prefix {
+  color: var(--color-blueprint-blue);
+}
+
+.hero-role-text {
+  color: var(--color-ice-highlight);
+}
+
+.hero-role-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--color-blueprint-blue);
+  transform: translateY(2px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-role-cursor {
+    animation: cursor-blink 1s step-end infinite;
+  }
+}
+
+.hero-tagline {
+  margin-top: var(--spacing-24);
+  max-width: 560px;
+  font-size: var(--text-subheading);
+  color: var(--color-moon-mist);
+}
+
+/* ---- Hero stat counters --------------------------------------------------- */
+.hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-24);
+  margin-top: var(--spacing-40);
+}
+
+.hero-stat {
+  text-align: center;
+}
+
+.hero-stat .value {
+  display: block;
+  font-family: var(--font-aeonikpro);
+  font-size: var(--text-heading-sm);
+  background: var(--gradient-ice-highlight);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-stat .label {
+  font-size: var(--text-caption);
+  color: var(--color-fog-veil);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hero-stat-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--color-glass-edge);
+}
+
+/* ---- Scroll cue ------------------------------------------------------------ */
+.hero-scroll-cue {
+  position: absolute;
+  left: 50%;
+  bottom: var(--spacing-24);
+  z-index: 1;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-iconcontainers);
+  border: 1px solid var(--color-glass-edge);
+  background: var(--surface-frosted-glass);
+  color: var(--color-fog-veil);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: color var(--duration-fast) var(--ease-glass),
+    background var(--duration-fast) var(--ease-glass);
+}
+
+.hero-scroll-cue svg {
+  width: 16px;
+  height: 16px;
+}
+
+.hero-scroll-cue:hover,
+.hero-scroll-cue:focus-visible {
+  color: var(--color-pure-white);
+  background: rgba(186, 214, 247, 0.12);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-scroll-cue {
+    animation: scroll-cue-bounce 2.4s ease-in-out infinite;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-scroll-cue {
+    display: none;
+  }
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-12);
+  margin-top: var(--spacing-32);
+}
+
+/* Floating auth-form-style cards, fanned behind the wordmark */
+.hero-cards {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
+  height: 260px;
+  margin-top: var(--spacing-56);
+  perspective: 1200px;
+}
+
+.hero-card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 220px;
+  border-radius: var(--radius-modals);
+  background: var(--surface-deep-glass);
+  box-shadow: var(--elevation-modal);
+  transform-style: preserve-3d;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: box-shadow var(--duration-base) var(--ease-glass);
+}
+
+.hero-card:hover,
+.hero-card:focus-visible {
+  box-shadow: var(--elevation-modal), 0 0 28px rgba(102, 58, 243, 0.28);
+  animation-play-state: paused;
+}
+
+.hero-card:hover .hero-card-tilt,
+.hero-card:focus-visible .hero-card-tilt {
+  --hover-lift: -8px;
+}
+
+.hero-card-tilt {
+  padding: var(--spacing-20);
+  transition: transform var(--duration-base) var(--ease-glass);
+  transform: translateY(var(--hover-lift, 0px)) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg));
+  will-change: transform;
+}
+
+.hero-card--left {
+  transform: translateX(calc(-50% - 220px)) rotate(-6deg);
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.hero-card--center {
+  transform: translateX(-50%) translateY(-16px) scale(1.08);
+  z-index: 2;
+  width: 240px;
+}
+
+.hero-card--right {
+  transform: translateX(calc(-50% + 220px)) rotate(6deg);
+  z-index: 1;
+  opacity: 0.85;
+}
+
+.hero-card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-12);
+}
+
+.hero-card-title {
+  font-size: var(--text-caption);
+  color: var(--color-fog-veil);
+}
+
+.hero-card-status {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-deep-teal);
+  box-shadow: 0 0 6px var(--color-deep-teal);
+}
+
+.hero-card-line {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(199, 211, 234, 0.1);
+  margin-bottom: var(--spacing-8);
+}
+
+.hero-card-line.short {
+  width: 60%;
+}
+
+@media (max-width: 760px) {
+  .hero-stats {
+    gap: var(--spacing-16);
+    margin-top: var(--spacing-32);
+  }
+  .hero-stat .value {
+    font-size: var(--text-heading-sm);
+  }
+  .hero-role {
+    font-size: var(--text-caption);
+    text-align: center;
+  }
+  .hero-cards {
+    height: 200px;
+  }
+  .hero-card {
+    width: 150px;
+    padding: var(--spacing-16);
+  }
+  .hero-card--left {
+    transform: translateX(calc(-50% - 118px)) rotate(-6deg) scale(0.9);
+  }
+  .hero-card--center {
+    transform: translateX(-50%) translateY(-12px) scale(0.98);
+  }
+  .hero-card--right {
+    transform: translateX(calc(-50% + 118px)) rotate(6deg) scale(0.9);
+  }
+}
+
+/* ---- Skills / feature icon row --------------------------------------------- */
+
+.skills-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-32) var(--spacing-16);
+  margin-top: var(--spacing-56);
+  position: relative;
+}
+
+@media (min-width: 640px) {
+  .skills-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .skills-row {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .skills-row::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 8%;
+    right: 8%;
+    height: 1px;
+    background: rgba(186, 215, 247, 0.12);
+    z-index: -1;
+  }
+}
+
+.skill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--spacing-12);
+}
+
+.skill-label {
+  font-size: var(--text-body-sm);
+  color: var(--color-moon-mist);
+}
+
+/* ---- Projects / selected work ---------------------------------------------- */
+
+.work-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: var(--spacing-32);
+  margin-bottom: var(--spacing-8);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-24);
+  margin-top: var(--spacing-40);
+}
+
+@media (min-width: 720px) {
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.work-grid.is-list {
+  grid-template-columns: 1fr;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  overflow: hidden;
+  transition: box-shadow var(--duration-base) var(--ease-glass),
+    transform var(--duration-base) var(--ease-glass);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--elevation-modal);
+}
+
+.card-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    280px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(216, 236, 248, 0.1),
+    transparent 65%
+  );
+  transition: opacity var(--duration-base) var(--ease-glass);
+}
+
+.project-card:hover .card-shine {
+  opacity: 1;
+}
+
+.project-thumb {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-inputs);
+  background: linear-gradient(135deg, rgba(186, 214, 247, 0.1), rgba(102, 58, 243, 0.12));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-fog-veil);
+  font-size: var(--text-caption);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-8);
+}
+
+.project-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-12);
+}
+
+.project-title h4 {
+  color: var(--color-ice-highlight);
+}
+
+.project-title a {
+  color: var(--color-fog-veil);
+  transition: color var(--duration-fast) var(--ease-glass), transform var(--duration-fast) var(--ease-glass);
+  display: inline-flex;
+}
+
+.project-title a:hover {
+  color: var(--color-frost-glow);
+  transform: translate(2px, -2px);
+}
+
+.project-title svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.5;
+}
+
+.project-desc {
+  font-size: var(--text-body-sm);
+  color: var(--color-moon-mist);
+}
+
+/* ---- About ------------------------------------------------------------------ */
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-40);
+  align-items: center;
+  margin-top: var(--spacing-56);
+}
+
+@media (min-width: 860px) {
+  .about-grid {
+    grid-template-columns: 0.85fr 1fr;
+  }
+}
+
+.about-portrait {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-cards);
+  background: var(--surface-frosted-glass);
+  box-shadow: var(--elevation-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-fog-veil);
+  font-size: var(--text-caption);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.about-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-copy p {
+  margin-bottom: var(--spacing-16);
+}
+
+.about-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-16);
+  margin-top: var(--spacing-32);
+}
+
+.about-stat {
+  padding: var(--spacing-16);
+}
+
+.about-stat .value {
+  font-family: var(--font-aeonikpro);
+  font-size: var(--text-heading);
+  color: var(--color-ice-highlight);
+  display: block;
+}
+
+.about-stat .label {
+  font-size: var(--text-caption);
+  color: var(--color-fog-veil);
+}
+
+/* ---- Contact — see css/contact.css for the enhanced info/form layout ------ */
+
+
+/* ---- Footer ------------------------------------------------------------------ */
+
+.site-footer {
+  border-top: 1px solid rgba(186, 215, 247, 0.08);
+  padding-block: var(--spacing-40);
+}
+
+.site-footer .container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .site-footer .container {
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+  }
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--spacing-24);
+  font-size: var(--text-body-sm);
+  color: var(--color-fog-veil);
+}
+
+.footer-links a:hover {
+  color: var(--color-frost-glow);
+}
+
+.footer-meta {
+  font-size: var(--text-caption);
+  color: var(--color-fog-veil);
+}
+
+/* ==========================================================================
+   CINEMATIC SECTION BACKGROUNDS — photographic backdrops for hero / skills /
+   contact, layered behind content the same way .bg-grid / .bg-spotlight are.
+   Structural + static rules live here; the Ken Burns / fade-in motion lives
+   in animations.css.
+   ========================================================================== */
+
+.section.has-bg {
+  overflow: hidden; /* contains the Ken Burns scale so it can't bleed into neighbouring sections */
+}
+
+.section-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  will-change: transform;
+  /* New stacking context so the color-grade blend below only mixes with
+     this section's own footage + overlay, never with .bg-grid, the
+     spotlight, or neighbouring sections. */
+  isolation: isolate;
+  /* Feather every edge into the midnight canvas so the footage reads as an
+     ambient wash woven into the section rather than a video pasted into a
+     hard-edged box — this is most of the "blend, don't paste" effect. */
+  mask-image: radial-gradient(130% 100% at 50% 40%, #000 50%, transparent 100%);
+  -webkit-mask-image: radial-gradient(130% 100% at 50% 40%, #000 50%, transparent 100%);
+}
+
+.section-bg-img,
+.section-bg-video {
+  position: absolute;
+  inset: -4%; /* slight overscan so the Ken Burns zoom never reveals an edge */
+  width: 108%;
+  height: 108%;
+  object-fit: cover;
+  opacity: 0;
+  filter: blur(18px);
+  transition: opacity 900ms var(--ease-glass), filter 900ms var(--ease-glass);
+}
+
+/* Kept intentionally atmospheric (low opacity) so it never competes with
+   foreground text contrast or WCAG legibility. Desaturated + cooled so the
+   raw footage sits inside the monochrome blue-white palette instead of
+   reading as a separate color video — the actual blue comes from the
+   ::after color-grade wash below via mix-blend-mode, never a new hex. */
+.section-bg-img.is-loaded,
+.section-bg-video.is-loaded {
+  opacity: 0.34;
+  filter: blur(0) grayscale(0.4) contrast(1.08) brightness(0.82) saturate(1.1);
+}
+
+/* Color-grade wash — tints the desaturated footage toward the existing
+   signal-blue token so it matches the site's palette exactly. */
+.section-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--color-signal-blue);
+  mix-blend-mode: color;
+  opacity: 0.22;
+  pointer-events: none;
+}
+
+.section-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 42%, transparent 25%, var(--color-midnight-canvas) 90%),
+    linear-gradient(
+      180deg,
+      var(--color-midnight-canvas) 0%,
+      rgba(5, 6, 15, 0.55) 45%,
+      var(--color-midnight-canvas) 100%
+    );
+}
+
+/* Hero keeps its existing spotlight glow on top of the photo */
+.hero .section-bg {
+  z-index: -2;
+}
+
+/* ---- Film grain — thin cinematic texture tying video + static sections
+   together. Single static SVG noise tile, near-invisible opacity, blended
+   with "overlay" so it never shifts color or hurts contrast. Fixed so it
+   reads as a lens/print grain over the whole viewport, not per-section. */
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-grain {
+    opacity: 0.02;
+  }
+}

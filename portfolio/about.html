@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Dev Pandey</title>
+  <meta name="description" content="More about Dev Pandey — background, how I work, skills, and a few things about life beyond the screen." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500&family=JetBrains+Mono:wght@400&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/floating-dock.css" />
+  <link rel="stylesheet" href="css/about.css" />
+  <link rel="stylesheet" href="css/macbook-scroll.css" />
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Cinematic curtain-open on first load; instantly hidden under reduced motion -->
+  <div class="curtain" aria-hidden="true">
+    <span class="curtain-panel curtain-panel--left"></span>
+    <span class="curtain-panel curtain-panel--right"></span>
+  </div>
+
+  <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
+
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+
+  <!-- Page-wide cinematic video backdrop -->
+  <div class="page-bg" aria-hidden="true">
+    <video
+      class="page-bg-video"
+      poster="assets/video/about-bg-poster.jpg"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="auto"
+    >
+      <source src="assets/video/about-bg.webm" type="video/webm" />
+      <source src="assets/video/about-bg.mp4" type="video/mp4" />
+    </video>
+    <div class="page-bg-overlay"></div>
+  </div>
+
+  <!-- ============================ HEADER ============================ -->
+  <header class="site-header" data-site-header>
+    <div class="site-header-inner">
+      <a href="index.html#top" class="logo">
+        <span class="logo-badge" aria-hidden="true">
+          <span class="logo-badge-text">DP</span>
+        </span>
+        <span class="logo-text">Dev Pandey</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Primary">
+        <span class="nav-indicator" aria-hidden="true"></span>
+        <a href="work.html">Work</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="about.html" aria-current="page">About</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="[RESUME_URL]">Résumé</a>
+        <span class="nav-divider" aria-hidden="true"></span>
+        <a class="btn-icon" href="[GITHUB_URL]" aria-label="GitHub profile" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============================ ABOUT HERO ============================ -->
+    <section class="about-hero">
+      <div class="container">
+        <div class="about-hero-layout">
+          <div class="about-hero-portrait-wrap" data-reveal>
+            <div class="about-hero-portrait">
+              <img src="[YOUR_PHOTO]" alt="Dev Pandey" loading="lazy" onerror="this.remove()" />
+              <div class="about-hero-portrait-ring" aria-hidden="true"></div>
+              <div class="about-hero-badge">
+                <span class="about-hero-badge-dot" aria-hidden="true"></span>
+                Open to select engagements
+              </div>
+            </div>
+          </div>
+
+          <div class="about-hero-copy" data-reveal>
+            <div class="eyebrow-row">
+              <span class="eyebrow">Introducing</span>
+            </div>
+            <h1 class="gradient-text">Hi, I'm Dev Pandey</h1>
+            <p class="about-hero-tagline">
+              A tech enthusiast and developer based in [YOUR LOCATION], turning ambiguous ideas into interfaces
+              that feel considered — precise, a little cinematic, and built to hold up in production.
+            </p>
+
+            <div class="about-hero-cta-row">
+              <a class="btn btn-ghost" href="[RESUME_URL]">Download résumé</a>
+              <a class="btn btn-outline" href="work.html">See selected work</a>
+              <a class="btn btn-outline" href="index.html#contact">Say hello</a>
+            </div>
+
+            <div class="about-hero-stats">
+              <div class="about-hero-stat">
+                <span class="value" data-count-to="4" data-count-suffix="+">0</span>
+                <span class="label">Years building</span>
+              </div>
+              <div class="about-hero-stat">
+                <span class="value" data-count-to="8">0</span>
+                <span class="label">Projects shipped</span>
+              </div>
+              <div class="about-hero-stat">
+                <span class="value" data-count-to="12" data-count-suffix="+">0</span>
+                <span class="label">Technologies used</span>
+              </div>
+              <div class="about-hero-stat">
+                <span class="value" data-count-to="99" data-count-suffix="%">0</span>
+                <span class="label">Cups of chai consumed*</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ BIO ============================ -->
+    <section class="section" id="bio" style="padding-top: var(--spacing-56);">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">The short version</span>
+          </div>
+          <h2>Background &amp; approach</h2>
+        </div>
+
+        <div class="bio-layout" data-reveal>
+          <div class="bio-copy">
+            <p>
+              [ONE OR TWO SENTENCES ON YOUR BACKGROUND — where you started, what pulled you toward development,
+              and the kind of problems you like solving. Keep it conversational, not a résumé bullet.]
+            </p>
+            <p>
+              [A SECOND PARAGRAPH ON HOW YOU WORK — your process, what you sweat over in a build, and how you
+              like to collaborate with designers, PMs, or other engineers.]
+            </p>
+            <p>
+              [A THIRD PARAGRAPH ON WHAT YOU'RE LOOKING FOR NEXT — the kind of teams, problems, or projects
+              you do your best work with.]
+            </p>
+          </div>
+
+          <div class="bio-pull-quote glass-card">
+            <blockquote>
+              "[A SHORT PERSONAL MOTTO OR PRINCIPLE YOU BUILD BY — one sentence that sums up how you approach
+              your craft.]"
+            </blockquote>
+            <cite>— Dev Pandey</cite>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ MACBOOK SCROLL ============================ -->
+    <section class="section macbook-scroll-section" id="setup">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">How I build</span>
+          </div>
+          <h2>From editor to browser</h2>
+          <p>Scroll to open the lid — a closer look at where ideas turn into interfaces.</p>
+        </div>
+      </div>
+      <div class="ms-scene">
+        <div data-macbook-mount></div>
+      </div>
+    </section>
+
+    <!-- ============================ JOURNEY (TABBED TIMELINE) ============================ -->
+    <section class="section" id="journey">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">How I got here</span>
+          </div>
+          <h2>My journey</h2>
+          <p>Toggle between experience and education to see the path so far.</p>
+        </div>
+
+        <div class="journey-controls" data-reveal>
+          <div class="segmented" role="group" aria-label="Journey view">
+            <button type="button" class="journey-tab" data-journey-tab="experience" aria-pressed="true">
+              <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+              Experience
+            </button>
+            <button type="button" class="journey-tab" data-journey-tab="education" aria-pressed="false">
+              <svg viewBox="0 0 24 24"><path d="m2 8 10-5 10 5-10 5-10-5Z"/><path d="M6 10.5V16c0 1.1 2.7 2 6 2s6-.9 6-2v-5.5"/></svg>
+              Education
+            </button>
+          </div>
+        </div>
+
+        <div class="journey-panels" data-reveal>
+          <div class="journey-panel is-active" id="journey-experience" data-journey-panel="experience">
+            <ol class="timeline">
+              <li class="timeline-item is-current">
+                <span class="timeline-dot" aria-hidden="true"></span>
+                <div class="timeline-card glass-card">
+                  <div class="timeline-meta">
+                    <span class="badge">Current</span>
+                    <span class="timeline-period">[2024] — Present</span>
+                  </div>
+                  <h4>[YOUR_CURRENT_ROLE]</h4>
+                  <span class="timeline-org">[CURRENT_COMPANY_NAME]</span>
+                  <p>[ONE OR TWO SENTENCES ON WHAT YOU OWN IN THIS ROLE AND A STANDOUT RESULT.]</p>
+                </div>
+              </li>
+              <li class="timeline-item">
+                <span class="timeline-dot" aria-hidden="true"></span>
+                <div class="timeline-card glass-card">
+                  <div class="timeline-meta">
+                    <span class="timeline-period">[2022] — [2024]</span>
+                  </div>
+                  <h4>[PREVIOUS_ROLE_1]</h4>
+                  <span class="timeline-org">[PREVIOUS_COMPANY_1]</span>
+                  <p>[WHAT YOU BUILT OR SHIPPED IN THIS ROLE, IN A SENTENCE OR TWO.]</p>
+                </div>
+              </li>
+              <li class="timeline-item">
+                <span class="timeline-dot" aria-hidden="true"></span>
+                <div class="timeline-card glass-card">
+                  <div class="timeline-meta">
+                    <span class="timeline-period">[2021] — [2022]</span>
+                  </div>
+                  <h4>[PREVIOUS_ROLE_2]</h4>
+                  <span class="timeline-org">[PREVIOUS_COMPANY_2]</span>
+                  <p>[WHAT YOU LEARNED OR CONTRIBUTED HERE — KEEP IT TO ONE OR TWO SENTENCES.]</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="journey-panel" id="journey-education" data-journey-panel="education" hidden>
+            <ol class="timeline">
+              <li class="timeline-item is-current">
+                <span class="timeline-dot" aria-hidden="true"></span>
+                <div class="timeline-card glass-card">
+                  <div class="timeline-meta">
+                    <span class="timeline-period">[2020] — [2024]</span>
+                  </div>
+                  <h4>[YOUR_DEGREE]</h4>
+                  <span class="timeline-org">[YOUR_UNIVERSITY]</span>
+                  <p>[FOCUS AREA, THESIS, OR A NOTABLE PROJECT FROM YOUR STUDIES.]</p>
+                </div>
+              </li>
+              <li class="timeline-item">
+                <span class="timeline-dot" aria-hidden="true"></span>
+                <div class="timeline-card glass-card">
+                  <div class="timeline-meta">
+                    <span class="timeline-period">[2019]</span>
+                  </div>
+                  <h4>[CERTIFICATION_OR_COURSE]</h4>
+                  <span class="timeline-org">[ISSUING_PLATFORM]</span>
+                  <p>[WHAT THE CERTIFICATION COVERED AND WHY YOU PURSUED IT.]</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ SKILLS MATRIX ============================ -->
+    <section class="section has-bg" id="skills-matrix-section">
+      <div class="section-bg" data-parallax="0.05" aria-hidden="true">
+        <video
+          class="section-bg-video"
+          poster="assets/video/skills-bg-poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+        >
+          <source src="assets/video/skills-bg.webm" type="video/webm" />
+          <source src="assets/video/skills-bg.mp4" type="video/mp4" />
+        </video>
+        <div class="section-bg-overlay"></div>
+      </div>
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">What I reach for</span>
+          </div>
+          <h2>Skills, by category</h2>
+          <p>Filter by area to see how confident I am in each — click a chip to switch.</p>
+        </div>
+
+        <div class="skills-filters" role="group" aria-label="Filter skills by category" data-reveal>
+          <button type="button" class="filter-chip" data-skill-filter="all" aria-pressed="true">All</button>
+          <button type="button" class="filter-chip" data-skill-filter="frontend" aria-pressed="false">Frontend</button>
+          <button type="button" class="filter-chip" data-skill-filter="backend" aria-pressed="false">Backend</button>
+          <button type="button" class="filter-chip" data-skill-filter="tools" aria-pressed="false">Tools &amp; Platform</button>
+        </div>
+
+        <div class="skills-matrix" data-reveal>
+          <div class="skill-card glass-card is-shown" data-skill-category="frontend">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><path d="M8 6 3 12l5 6M16 6l5 6-5 6"/></svg>
+            </div>
+            <div class="skill-card-body">
+              <div class="skill-card-row">
+                <span class="skill-name">React &amp; modern JS</span>
+                <span class="skill-pct">92%</span>
+              </div>
+              <div class="skill-bar-track"><span class="skill-bar-fill" data-skill-value="92"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card is-shown" data-skill-category="frontend">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/></svg>
+            </div>
+            <div class="skill-card-body">
+              <div class="skill-card-row">
+                <span class="skill-name">Design systems</span>
+                <span class="skill-pct">85%</span>
+              </div>
+              <div class="skill-bar-track"><span class="skill-bar-fill" data-skill-value="85"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card is-shown" data-skill-category="backend">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 9h18M9 21V9"/></svg>
+            </div>
+            <div class="skill-card-body">
+              <div class="skill-card-row">
+                <span class="skill-name">API &amp; backend integration</span>
+                <span class="skill-pct">80%</span>
+              </div>
+              <div class="skill-bar-track"><span class="skill-bar-fill" data-skill-value="80"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card is-shown" data-skill-category="backend">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.66 3.58 3 8 3s8-1.34 8-3V6M4 12c0 1.66 3.58 3 8 3s8-1.34 8-3"/></svg>
+            </div>
+            <div class="skill-card-body">
+              <div class="skill-card-row">
+                <span class="skill-name">Data modeling</span>
+                <span class="skill-pct">75%</span>
+              </div>
+              <div class="skill-bar-track"><span class="skill-bar-fill" data-skill-value="75"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card is-shown" data-skill-category="tools">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><path d="M3 20V10M9 20V4M15 20v-7M21 20V8"/></svg>
+            </div>
+            <div class="skill-card-body">
+              <div class="skill-card-row">
+                <span class="skill-name">Performance &amp; tooling</span>
+                <span class="skill-pct">88%</span>
+              </div>
+              <div class="skill-bar-track"><span class="skill-bar-fill" data-skill-value="88"></span></div>
+            </div>
+          </div>
+
+          <div class="skill-card glass-card is-shown" data-skill-category="tools">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+            </div>
+            <div class="skill-card-body">
+              <div class="skill-card-row">
+                <span class="skill-name">Cross-platform delivery</span>
+                <span class="skill-pct">70%</span>
+              </div>
+              <div class="skill-bar-track"><span class="skill-bar-fill" data-skill-value="70"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ VALUES ============================ -->
+    <section class="section" id="values">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">How I like to work</span>
+          </div>
+          <h2>Principles I build by</h2>
+        </div>
+
+        <div class="values-grid" data-reveal>
+          <div class="glass-card shine-card value-card">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6l-8-4Z"/></svg>
+            </div>
+            <h4>Craft over shortcuts</h4>
+            <p>I'd rather ship a smaller thing done properly than a big thing held together with hope.</p>
+          </div>
+          <div class="glass-card shine-card value-card">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            </div>
+            <h4>Stay curious</h4>
+            <p>New tools and patterns get evaluated on merit, not hype — but I try them before I judge them.</p>
+          </div>
+          <div class="glass-card shine-card value-card">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <h4>Communicate early</h4>
+            <p>Blockers and trade-offs surface as soon as I see them — no surprises the day before a deadline.</p>
+          </div>
+          <div class="glass-card shine-card value-card">
+            <div class="icon-tile">
+              <svg viewBox="0 0 24 24"><path d="M12 20v-6M12 14 6 8l6-6 6 6-6 6Z"/></svg>
+            </div>
+            <h4>Consistency compounds</h4>
+            <p>Small, steady improvements to a codebase beat heroics — most of my best work is unglamorous.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ BEYOND THE SCREEN (FLIP CARDS) ============================ -->
+    <section class="section" id="beyond">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">Off the clock</span>
+          </div>
+          <h2>Beyond the screen</h2>
+          <p>Tap a card to flip it.</p>
+        </div>
+
+        <div class="flip-grid" data-reveal>
+          <button type="button" class="flip-card" data-flip-card aria-pressed="false">
+            <div class="flip-card-inner">
+              <div class="flip-card-face flip-card-front">
+                <svg viewBox="0 0 24 24"><path d="M12 21c-4.4-2.8-8-6-8-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 4-3.6 7.2-8 10Z"/></svg>
+                <span>Gaming</span>
+              </div>
+              <div class="flip-card-face flip-card-back">
+                <p>[A LINE ABOUT THE GAMES OR GENRES YOU'RE INTO RIGHT NOW.]</p>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="flip-card" data-flip-card aria-pressed="false">
+            <div class="flip-card-inner">
+              <div class="flip-card-face flip-card-front">
+                <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+                <span>Music</span>
+              </div>
+              <div class="flip-card-face flip-card-back">
+                <p>[WHAT YOU LISTEN TO WHILE BUILDING, OR AN INSTRUMENT YOU PLAY.]</p>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="flip-card" data-flip-card aria-pressed="false">
+            <div class="flip-card-inner">
+              <div class="flip-card-face flip-card-front">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/></svg>
+                <span>Reading</span>
+              </div>
+              <div class="flip-card-face flip-card-back">
+                <p>[A GENRE OR A BOOK THAT SHAPED HOW YOU THINK ABOUT YOUR WORK.]</p>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="flip-card" data-flip-card aria-pressed="false">
+            <div class="flip-card-inner">
+              <div class="flip-card-face flip-card-front">
+                <svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><path d="M4 22V15"/></svg>
+                <span>Travel</span>
+              </div>
+              <div class="flip-card-face flip-card-back">
+                <p>[A PLACE YOU'VE BEEN OR WANT TO GO, AND WHY.]</p>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="flip-card" data-flip-card aria-pressed="false">
+            <div class="flip-card-inner">
+              <div class="flip-card-face flip-card-front">
+                <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4z"/><path d="M6 1v3M10 1v3M14 1v3"/></svg>
+                <span>Coffee &amp; chai</span>
+              </div>
+              <div class="flip-card-face flip-card-back">
+                <p>[YOUR GO-TO ORDER OR A RITUAL AROUND YOUR MORNING BREW.]</p>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="flip-card" data-flip-card aria-pressed="false">
+            <div class="flip-card-inner">
+              <div class="flip-card-face flip-card-front">
+                <svg viewBox="0 0 24 24"><path d="M13 2 3 14h7l-1 8 10-12h-7z"/></svg>
+                <span>Side projects</span>
+              </div>
+              <div class="flip-card-face flip-card-back">
+                <p>[SOMETHING YOU BUILD FOR FUN, NOT WORK — A HOBBY REPO, A BOT, A TOOL.]</p>
+              </div>
+            </div>
+          </button>
+        </div>
+
+        <p class="flip-hint">*chai stat is a rough estimate, not independently audited</p>
+      </div>
+    </section>
+
+    <!-- ============================ TESTIMONIALS ============================ -->
+    <section class="section has-bg" id="testimonials">
+      <div class="section-bg" data-parallax="0.05" aria-hidden="true">
+        <video
+          class="section-bg-video"
+          poster="assets/video/contact-bg-poster.jpg"
+          autoplay
+          muted
+          loop
+          playsinline
+          preload="none"
+        >
+          <source src="assets/video/contact-bg.webm" type="video/webm" />
+          <source src="assets/video/contact-bg.mp4" type="video/mp4" />
+        </video>
+        <div class="section-bg-overlay"></div>
+      </div>
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">Kind words</span>
+          </div>
+          <h2>What people say</h2>
+        </div>
+
+        <div class="testimonial-carousel" data-reveal>
+          <div class="testimonial-track-wrap">
+            <div class="testimonial-track" id="testimonial-track">
+              <div class="testimonial-slide modal-card">
+                <p class="testimonial-quote">"[A SHORT QUOTE ABOUT WORKING WITH YOU — WHAT STOOD OUT, WHAT THEY'D SAY TO SOMEONE HIRING YOU.]"</p>
+                <span class="testimonial-author">[REVIEWER_1_NAME]</span>
+                <span class="testimonial-role">[REVIEWER_1_ROLE], [REVIEWER_1_COMPANY]</span>
+              </div>
+              <div class="testimonial-slide modal-card">
+                <p class="testimonial-quote">"[A SECOND QUOTE — MAYBE ABOUT RELIABILITY, COMMUNICATION, OR PROBLEM-SOLVING.]"</p>
+                <span class="testimonial-author">[REVIEWER_2_NAME]</span>
+                <span class="testimonial-role">[REVIEWER_2_ROLE], [REVIEWER_2_COMPANY]</span>
+              </div>
+              <div class="testimonial-slide modal-card">
+                <p class="testimonial-quote">"[A THIRD QUOTE — SOMETHING ABOUT THE OUTCOME OF A PROJECT YOU WORKED ON TOGETHER.]"</p>
+                <span class="testimonial-author">[REVIEWER_3_NAME]</span>
+                <span class="testimonial-role">[REVIEWER_3_ROLE], [REVIEWER_3_COMPANY]</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-controls">
+            <button type="button" class="testimonial-arrow" id="testimonial-prev" aria-label="Previous testimonial">
+              <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+            <div class="testimonial-dots" id="testimonial-dots" role="tablist" aria-label="Testimonials"></div>
+            <button type="button" class="testimonial-arrow" id="testimonial-next" aria-label="Next testimonial">
+              <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ FAQ ============================ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="section-heading" data-reveal>
+          <div class="eyebrow-row">
+            <span class="eyebrow">Curious about something else?</span>
+          </div>
+          <h2>Quick answers</h2>
+        </div>
+
+        <div class="faq-list" data-reveal>
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false">
+              What kind of projects are you looking for right now?
+              <span class="faq-question-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>[YOUR ANSWER — THE TYPE OF ROLE, ENGAGEMENT, OR PROBLEM SPACE YOU'RE MOST EXCITED ABOUT.]</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false">
+              What does your typical stack look like?
+              <span class="faq-question-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>[YOUR ANSWER — A BRIEF RUNDOWN OF THE TOOLS YOU REACH FOR MOST AND WHY.]</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false">
+              Do you take on freelance or contract work?
+              <span class="faq-question-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>[YOUR ANSWER — YOUR AVAILABILITY, TYPICAL ENGAGEMENT LENGTH, OR HOW TO REACH OUT.]</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button type="button" class="faq-question" aria-expanded="false">
+              What's the best way to get in touch?
+              <span class="faq-question-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                <p>Email is fastest — <a href="mailto:[EMAIL]" style="color: var(--color-frost-glow); text-decoration: underline;">[EMAIL]</a> — or use the form on the <a href="index.html#contact" style="color: var(--color-frost-glow); text-decoration: underline;">contact section</a>.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================ CTA BANNER ============================ -->
+    <section class="section" style="padding-top: 0;">
+      <div class="container">
+        <div class="modal-card work-cta-card" data-reveal>
+          <h3>Let's build something together</h3>
+          <p>If any of this resonated, I'd love to hear what you're working on.</p>
+          <div class="work-cta-actions">
+            <a class="btn btn-cta" style="width: auto;" href="index.html#contact">Start a conversation</a>
+            <a class="btn btn-outline" href="index.html#top">Back to home</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================ FOOTER ============================ -->
+  <footer class="site-footer">
+    <div class="container">
+      <span class="footer-meta">© <span id="current-year">2026</span> Dev Pandey. All rights reserved.</span>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="[GITHUB_URL]" target="_blank" rel="noopener">GitHub</a>
+        <a href="[LINKEDIN_URL]" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:[EMAIL]">Email</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/about.js"></script>
+  <script src="js/macbook-scroll.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- ============================ FLOATING DOCK ============================ -->
+  <div class="floating-dock" data-floating-dock>
+    <nav class="floating-dock-desktop" aria-label="Quick navigation">
+      <a class="floating-dock-icon" href="index.html#top" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10.5V20a1 1 0 0 0 1 1h4v-6a2 2 0 1 1 4 0v6h4a1 1 0 0 0 1-1v-9.5"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Home</span>
+      </a>
+      <a class="floating-dock-icon" href="work.html" aria-label="Work">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M2 13h20"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Work</span>
+      </a>
+      <a class="floating-dock-icon" href="index.html#skills" aria-label="Skills">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Skills</span>
+      </a>
+      <a class="floating-dock-icon" href="about.html" aria-label="About" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">About</span>
+      </a>
+      <a class="floating-dock-icon" href="index.html#contact" aria-label="Contact">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Contact</span>
+      </a>
+      <a class="floating-dock-icon" href="[RESUME_URL]" aria-label="Résumé">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Résumé</span>
+      </a>
+      <a class="floating-dock-icon" href="[GITHUB_URL]" aria-label="GitHub profile" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">GitHub</span>
+      </a>
+    </nav>
+
+    <div class="floating-dock-mobile">
+      <div class="floating-dock-mobile-items" id="floating-dock-mobile-items">
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">GitHub</span>
+          <a class="floating-dock-icon" href="[GITHUB_URL]" aria-label="GitHub profile" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Résumé</span>
+          <a class="floating-dock-icon" href="[RESUME_URL]" aria-label="Résumé">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h6"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Contact</span>
+          <a class="floating-dock-icon" href="index.html#contact" aria-label="Contact">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">About</span>
+          <a class="floating-dock-icon" href="about.html" aria-label="About" aria-current="page">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Skills</span>
+          <a class="floating-dock-icon" href="index.html#skills" aria-label="Skills">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Work</span>
+          <a class="floating-dock-icon" href="work.html" aria-label="Work">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><path d="M2 13h20"/></svg>
+          </a>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Home</span>
+          <a class="floating-dock-icon" href="index.html#top" aria-label="Home">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9.5 12 3l9 6.5"/><path d="M5 10.5V20a1 1 0 0 0 1 1h4v-6a2 2 0 1 1 4 0v6h4a1 1 0 0 0 1-1v-9.5"/></svg>
+          </a>
+        </div>
+      </div>
+      <button class="floating-dock-mobile-toggle" aria-label="Open quick navigation" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <script src="js/floating-dock.js"></script>
+</body>
+</html>

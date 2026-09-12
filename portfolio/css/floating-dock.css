@@ -1,0 +1,233 @@
+/* ==========================================================================
+   FLOATING DOCK
+   Fixed quick-navigation dock — magnifies icons toward the cursor on desktop
+   (bottom-center), collapses to a tap-to-expand stack on mobile (bottom-right).
+   Ported from a React/Framer-Motion component to vanilla CSS + JS to match
+   this site's stack. Visual language follows tokens.css ("frosted glass
+   cathedral at midnight").
+   ========================================================================== */
+
+.floating-dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: var(--spacing-24);
+  z-index: 55;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity var(--duration-base) var(--ease-glass),
+    transform var(--duration-base) var(--ease-glass);
+}
+
+.floating-dock.is-hidden {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+.floating-dock * {
+  pointer-events: auto;
+}
+
+/* ---- Shared icon chrome ------------------------------------------------- */
+.floating-dock-icon {
+  --dock-size: 40px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--dock-size);
+  height: var(--dock-size);
+  border-radius: var(--radius-iconcontainers);
+  background: var(--color-luminous-fill);
+  box-shadow: var(--shadow-subtle-3);
+  color: var(--color-moon-mist);
+  flex-shrink: 0;
+  transition: width 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background var(--duration-fast) var(--ease-glass),
+    color var(--duration-fast) var(--ease-glass);
+}
+
+.floating-dock-icon:hover,
+.floating-dock-icon:focus-visible {
+  background: var(--color-void-violet);
+  color: var(--color-pure-white);
+}
+
+.floating-dock-icon svg {
+  width: calc(var(--dock-size) * 0.5);
+  height: calc(var(--dock-size) * 0.5);
+  transition: width 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.floating-dock-icon[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-void-violet);
+  transform: translateX(-50%);
+}
+
+.floating-dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  transform: translate(-50%, 4px);
+  white-space: pre;
+  padding: var(--spacing-4) var(--spacing-8);
+  border-radius: var(--radius-badges);
+  border: 1px solid var(--color-glass-edge);
+  background: var(--surface-deep-glass);
+  color: var(--color-ice-highlight);
+  font-family: var(--font-untitled-sans);
+  font-size: var(--text-caption);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity var(--duration-fast) var(--ease-glass),
+    transform var(--duration-fast) var(--ease-glass),
+    visibility var(--duration-fast);
+}
+
+.floating-dock-icon:hover .floating-dock-tooltip,
+.floating-dock-icon:focus-visible .floating-dock-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+/* ---- Desktop dock --------------------------------------------------------- */
+.floating-dock-desktop {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .floating-dock-desktop {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--spacing-16);
+    height: 64px;
+    padding: 0 var(--spacing-16) var(--spacing-12);
+    border-radius: var(--radius-buttons);
+    border: 1px solid var(--color-glass-edge);
+    background: var(--surface-frosted-glass);
+    box-shadow: var(--elevation-modal);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .floating-dock-mobile {
+    display: none;
+  }
+}
+
+/* ---- Mobile dock ------------------------------------------------------ */
+.floating-dock-mobile {
+  position: fixed;
+  right: var(--spacing-24);
+  bottom: var(--spacing-24);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-12);
+}
+
+.floating-dock-mobile-items {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-8);
+}
+
+.floating-dock-mobile-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity var(--duration-base) var(--ease-glass),
+    transform var(--duration-base) var(--ease-glass);
+}
+
+.floating-dock-mobile-items.is-open .floating-dock-mobile-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.floating-dock-mobile-item:not(.is-open) {
+  transition-delay: 0ms;
+}
+
+.floating-dock-mobile-item-label {
+  padding: var(--spacing-4) var(--spacing-8);
+  border-radius: var(--radius-badges);
+  border: 1px solid var(--color-glass-edge);
+  background: var(--surface-deep-glass);
+  color: var(--color-ice-highlight);
+  font-family: var(--font-untitled-sans);
+  font-size: var(--text-caption);
+  white-space: nowrap;
+}
+
+.floating-dock-mobile-item .floating-dock-icon {
+  --dock-size: 40px !important;
+  width: var(--dock-size);
+  height: var(--dock-size);
+}
+
+.floating-dock-mobile-item .floating-dock-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.floating-dock-mobile-item .floating-dock-tooltip {
+  display: none;
+}
+
+.floating-dock-mobile-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-iconcontainers);
+  border: 1px solid var(--color-glass-edge);
+  background: var(--surface-frosted-glass);
+  box-shadow: var(--elevation-modal);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  color: var(--color-moon-mist);
+  transition: transform var(--duration-fast) var(--ease-glass),
+    color var(--duration-fast) var(--ease-glass);
+}
+
+.floating-dock-mobile-toggle svg {
+  width: 20px;
+  height: 20px;
+  transition: transform var(--duration-base) var(--ease-glass);
+}
+
+.floating-dock-mobile-toggle[aria-expanded="true"] svg {
+  transform: rotate(45deg);
+}
+
+.floating-dock-mobile-toggle:hover,
+.floating-dock-mobile-toggle:focus-visible {
+  color: var(--color-pure-white);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating-dock-icon,
+  .floating-dock-icon svg,
+  .floating-dock-mobile-item,
+  .floating-dock-mobile-toggle svg,
+  .floating-dock {
+    transition: none !important;
+  }
+}
