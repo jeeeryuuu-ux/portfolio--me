@@ -22,14 +22,61 @@
   <link rel="stylesheet" href="css/animations.css" />
   <link rel="stylesheet" href="css/contact.css" />
   <link rel="stylesheet" href="css/floating-dock.css" />
+  <link rel="stylesheet" href="css/theme-toggle.css" />
+  <link rel="stylesheet" href="css/sound-toggle.css" />
+  <link rel="stylesheet" href="css/cinematic-audio.css" />
+  <link rel="stylesheet" href="css/cinematic-intro.css" />
+  <script>
+    (function(){
+      try {
+        const t = localStorage.getItem('portfolio_theme') || 'dark';
+        if (t === 'light') {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.classList.add('light');
+          document.documentElement.classList.remove('dark');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          document.documentElement.classList.add('dark');
+          document.documentElement.classList.remove('light');
+        }
+      } catch(e) {}
+
+      // Early check for first-visit cinematic intro to prevent visual flash
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const reset = params.has('reset-intro') || params.has('intro') || params.has('cinematic');
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const seen = localStorage.getItem('devness_intro_seen') === 'true';
+        if (!reduced && (!seen || reset)) {
+          document.documentElement.classList.add('cinematic-intro-active');
+        } else {
+          document.documentElement.classList.add('cinematic-intro-done');
+        }
+      } catch(e) {}
+    })();
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Cinematic curtain-open on first load; instantly hidden under reduced motion -->
-  <div class="curtain" aria-hidden="true">
-    <span class="curtain-panel curtain-panel--left"></span>
-    <span class="curtain-panel curtain-panel--right"></span>
+  <!-- Cinematic first-visit entrance experience (orchestrates around the live wallpaper) -->
+  <div id="cinematic-intro" class="cinematic-intro" aria-hidden="true">
+    <div class="intro-aperture"></div>
+    <div class="intro-light-sweep"></div>
+    <div class="intro-identity">
+      <div class="intro-brand">
+        <span class="intro-brand-name">DEVNESS</span>
+        <div class="intro-brand-sub">
+          <span class="intro-brand-sub-line" aria-hidden="true"></span>
+          <span>Digital Studio</span>
+          <span class="intro-brand-sub-line" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="intro-skip-btn" id="intro-skip-btn" aria-label="Skip cinematic introduction">
+      <span>Skip intro</span>
+      <kbd aria-hidden="true">ESC</kbd>
+    </button>
   </div>
 
   <div class="scroll-progress" aria-hidden="true"><span id="scroll-progress-bar"></span></div>
@@ -61,6 +108,46 @@
         <a class="btn-icon" href="[GITHUB_URL]" aria-label="GitHub profile" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
         </a>
+        <button
+          class="btn-icon sound-toggle-btn"
+          id="sound-toggle-header"
+          type="button"
+          aria-label="Unmute background video sound"
+          aria-pressed="false"
+          title="Unmute background video sound"
+          data-sound-toggle
+        >
+          <span class="sr-only">Toggle background sound</span>
+          <svg class="sound-toggle-icon sound-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+          <svg class="sound-toggle-icon sound-icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path class="sound-wave-inner" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            <path class="sound-wave-outer" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+          </svg>
+          <span class="sound-live-dot" aria-hidden="true"></span>
+        </button>
+        <div class="theme-toggle-cluster" data-theme-toggle-cluster>
+          <button class="theme-toggle-btn" id="theme-toggle-header" type="button" aria-label="Toggle color theme" title="Toggle color theme">
+            <span class="sr-only">Toggle theme</span>
+            <svg class="theme-toggle-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g class="theme-toggle-inner">
+                <path d="M120 67.5C149.25 67.5 172.5 90.75 172.5 120C172.5 149.25 149.25 172.5 120 172.5" class="theme-toggle-half-light" />
+                <path d="M120 67.5C90.75 67.5 67.5 90.75 67.5 120C67.5 149.25 90.75 172.5 120 172.5" class="theme-toggle-half-dark" />
+              </g>
+              <path class="theme-toggle-outer" d="M120 3.75C55.5 3.75 3.75 55.5 3.75 120C3.75 184.5 55.5 236.25 120 236.25C184.5 236.25 236.25 184.5 236.25 120C236.25 55.5 184.5 3.75 120 3.75ZM120 214.5V172.5C90.75 172.5 67.5 149.25 67.5 120C67.5 90.75 90.75 67.5 120 67.5V25.5C172.5 25.5 214.5 67.5 214.5 120C214.5 172.5 172.5 214.5 120 214.5Z" />
+            </svg>
+          </button>
+          <button class="theme-options-trigger" type="button" aria-label="Theme transition options" title="Theme transition options" data-theme-options-toggle aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"></circle>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+            </svg>
+          </button>
+        </div>
       </div>
     </div>
   </header>
@@ -378,6 +465,7 @@
     </div>
   </footer>
 
+  <script src="js/cinematic-intro.js"></script>
   <script src="js/main.js"></script>
 
   <!-- ============================ FLOATING DOCK ============================ -->
@@ -411,10 +499,62 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.49-1.11-1.49-.9-.63.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.9 1.56 2.36 1.11 2.93.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.32 9.32 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.94-2.35 4.8-4.58 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
         <span class="floating-dock-tooltip" aria-hidden="true">GitHub</span>
       </a>
+      <button class="floating-dock-icon sound-toggle-btn" type="button" aria-label="Unmute background video sound" aria-pressed="false" title="Unmute background video sound" data-sound-toggle>
+        <svg class="sound-toggle-icon sound-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <line x1="23" y1="9" x2="17" y2="15"></line>
+          <line x1="17" y1="9" x2="23" y2="15"></line>
+        </svg>
+        <svg class="sound-toggle-icon sound-icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+          <path class="sound-wave-inner" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <path class="sound-wave-outer" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+        </svg>
+        <span class="sound-live-dot" aria-hidden="true"></span>
+        <span class="floating-dock-tooltip" aria-hidden="true">Sound</span>
+      </button>
+      <button class="floating-dock-icon theme-toggle-btn" type="button" aria-label="Toggle color theme" title="Toggle color theme">
+        <svg class="theme-toggle-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <g class="theme-toggle-inner">
+            <path d="M120 67.5C149.25 67.5 172.5 90.75 172.5 120C172.5 149.25 149.25 172.5 120 172.5" class="theme-toggle-half-light" />
+            <path d="M120 67.5C90.75 67.5 67.5 90.75 67.5 120C67.5 149.25 90.75 172.5 120 172.5" class="theme-toggle-half-dark" />
+          </g>
+          <path class="theme-toggle-outer" d="M120 3.75C55.5 3.75 3.75 55.5 3.75 120C3.75 184.5 55.5 236.25 120 236.25C184.5 236.25 236.25 184.5 236.25 120C236.25 55.5 184.5 3.75 120 3.75ZM120 214.5V172.5C90.75 172.5 67.5 149.25 67.5 120C67.5 90.75 90.75 67.5 120 67.5V25.5C172.5 25.5 214.5 67.5 214.5 120C214.5 172.5 172.5 214.5 120 214.5Z" />
+        </svg>
+        <span class="floating-dock-tooltip" aria-hidden="true">Theme</span>
+      </button>
     </nav>
 
     <div class="floating-dock-mobile">
       <div class="floating-dock-mobile-items" id="floating-dock-mobile-items">
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Sound</span>
+          <button class="floating-dock-icon sound-toggle-btn" type="button" aria-label="Unmute background video sound" aria-pressed="false" data-sound-toggle>
+            <svg class="sound-toggle-icon sound-icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <line x1="23" y1="9" x2="17" y2="15"></line>
+              <line x1="17" y1="9" x2="23" y2="15"></line>
+            </svg>
+            <svg class="sound-toggle-icon sound-icon-unmuted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path class="sound-wave-inner" d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path class="sound-wave-outer" d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+            <span class="sound-live-dot" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="floating-dock-mobile-item">
+          <span class="floating-dock-mobile-item-label">Theme</span>
+          <button class="floating-dock-icon theme-toggle-btn" type="button" aria-label="Toggle color theme">
+            <svg class="theme-toggle-svg" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g class="theme-toggle-inner">
+                <path d="M120 67.5C149.25 67.5 172.5 90.75 172.5 120C172.5 149.25 149.25 172.5 120 172.5" class="theme-toggle-half-light" />
+                <path d="M120 67.5C90.75 67.5 67.5 90.75 67.5 120C67.5 149.25 90.75 172.5 120 172.5" class="theme-toggle-half-dark" />
+              </g>
+              <path class="theme-toggle-outer" d="M120 3.75C55.5 3.75 3.75 55.5 3.75 120C3.75 184.5 55.5 236.25 120 236.25C184.5 236.25 236.25 184.5 236.25 120C236.25 55.5 184.5 3.75 120 3.75ZM120 214.5V172.5C90.75 172.5 67.5 149.25 67.5 120C67.5 90.75 90.75 67.5 120 67.5V25.5C172.5 25.5 214.5 67.5 214.5 120C214.5 172.5 172.5 214.5 120 214.5Z" />
+            </svg>
+          </button>
+        </div>
         <div class="floating-dock-mobile-item">
           <span class="floating-dock-mobile-item-label">GitHub</span>
           <a class="floating-dock-icon" href="[GITHUB_URL]" aria-label="GitHub profile" target="_blank" rel="noopener">
@@ -465,5 +605,8 @@
   </div>
 
   <script src="js/floating-dock.js"></script>
+  <script src="js/theme-toggle.js"></script>
+  <script src="js/sound-toggle.js"></script>
+  <script src="js/cinematic-audio.js"></script>
 </body>
 </html>

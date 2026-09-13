@@ -203,7 +203,21 @@
           }
         };
 
-        window.setTimeout(tick, 700);
+        let started = false;
+        const startTypewriter = () => {
+          if (started) return;
+          started = true;
+          tick();
+        };
+
+        const introActive = document.documentElement.classList.contains("cinematic-intro-active");
+        const typewriterDelay = introActive ? 2200 : 700;
+        const timerId = window.setTimeout(startTypewriter, typewriterDelay);
+
+        document.addEventListener("cinematic-intro-complete", () => {
+          window.clearTimeout(timerId);
+          startTypewriter();
+        }, { once: true });
       }
     }
   }

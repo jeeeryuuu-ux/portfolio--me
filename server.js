@@ -63,6 +63,9 @@ app.use(express.static(staticDir));
 // Support /portfolio prefix for any explicit paths
 app.use('/portfolio', express.static(staticDir));
 
+// Support /public prefix if referenced directly
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 // Fallback to index.html
 app.get('*', (req, res) => {
   res.sendFile(path.join(staticDir, 'index.html'));

@@ -1,0 +1,489 @@
+/* ==========================================================================
+   THEME TOGGLE & LIGHT THEME STYLES
+   Inspired by Skiper 26 Theme Toggle / View Transition API
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Light Theme Tokens & Overrides
+   -------------------------------------------------------------------------- */
+[data-theme="light"],
+html.light {
+  color-scheme: light;
+  --color-midnight-canvas: #f8fafc;
+  --color-steel-plate: #e2e8f0;
+  --color-fog-veil: #64748b;
+  --color-moon-mist: #334155;
+  --color-frost-glow: #0f172a;
+  --color-ice-highlight: #020617;
+  --gradient-ice-highlight: linear-gradient(180deg, #020617 0%, #334155 100%);
+  --color-pure-white: #020617;
+  --color-void-violet: #6366f1;
+  --color-void-violet-hover: #4f46e5;
+  --color-blueprint-blue: #2563eb;
+  --color-ember-glow: #dc2626;
+  --color-signal-blue: #0284c7;
+  --color-deep-teal: #0d9488;
+  --color-gridline-blue: #cbd5e1;
+  --color-glass-edge: rgba(15, 23, 42, 0.08);
+  --color-luminous-fill: rgba(15, 23, 42, 0.04);
+
+  --surface-midnight-canvas: #f8fafc;
+  --surface-steel-plate: #e2e8f0;
+  --surface-frosted-glass: rgba(255, 255, 255, 0.82);
+  --surface-deep-glass: rgba(255, 255, 255, 0.94);
+
+  --shadow-sm: rgba(15, 23, 42, 0.08) 0px 1px 3px 0px;
+  --shadow-md: rgba(15, 23, 42, 0.12) 0px 4px 12px 0px;
+  --shadow-subtle: rgba(15, 23, 42, 0.08) 0px 0px 0px 1px inset;
+  --shadow-subtle-2: rgba(15, 23, 42, 0.04) 0px 1px 2px 0px,
+    rgba(255, 255, 255, 0.9) 0px 0px 0px 1px inset;
+  --shadow-subtle-3: rgba(15, 23, 42, 0.06) 0px 0px 0px 1px inset;
+  --shadow-subtle-4: rgba(15, 23, 42, 0.05) 0px 10px 25px -5px,
+    rgba(15, 23, 42, 0.08) 0px 0px 0px 1px inset;
+  --shadow-subtle-5: rgba(15, 23, 42, 0.08) 0px 0px 0px 1px inset;
+  --shadow-subtle-6: rgba(15, 23, 42, 0.08) 0px 16px 36px -6px,
+    rgba(15, 23, 42, 0.06) 0px 0px 0px 1px inset;
+  --shadow-subtle-7: rgba(15, 23, 42, 0.06) 0px 4px 16px 0px,
+    rgba(15, 23, 42, 0.08) 0px 0px 0px 1px inset;
+  --shadow-subtle-8: rgba(15, 23, 42, 0.06) 0px 4px 16px 0px,
+    rgba(15, 23, 42, 0.08) 0px 0px 0px 1px inset;
+  --shadow-subtle-9: rgba(15, 23, 42, 0.12) 0px 0px 0px 1px inset;
+}
+
+/* Light mode ambient adjustments */
+[data-theme="light"] body {
+  background-color: var(--color-midnight-canvas);
+  color: var(--color-moon-mist);
+}
+
+[data-theme="light"] .bg-grid {
+  background-image:
+    linear-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+}
+
+[data-theme="light"] .bg-spotlight {
+  background: conic-gradient(
+    at 50% -5%,
+    transparent 45%,
+    rgba(99, 102, 241, 0.12) 49%,
+    rgba(147, 197, 253, 0.18) 50%,
+    rgba(99, 102, 241, 0.12) 51%,
+    transparent 55%
+  );
+  opacity: 0.5;
+}
+
+[data-theme="light"] .section-bg-overlay,
+[data-theme="light"] .page-bg-overlay {
+  background: radial-gradient(circle at center, rgba(248, 250, 252, 0.85) 0%, rgba(248, 250, 252, 0.97) 100%);
+}
+
+[data-theme="light"] .section-bg-video,
+[data-theme="light"] .page-bg-video {
+  opacity: 0.22;
+  filter: grayscale(20%);
+}
+
+[data-theme="light"] .site-header::before {
+  background: linear-gradient(to bottom, rgba(248, 250, 252, 0.88), rgba(248, 250, 252, 0));
+}
+
+[data-theme="light"] .hero-glow {
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.07) 0%, transparent 70%);
+}
+
+[data-theme="light"] .curtain-panel {
+  background: var(--color-midnight-canvas);
+  box-shadow: rgba(15, 23, 42, 0.06) 0px 0px 40px 0px;
+}
+
+[data-theme="light"] .logo-badge::after {
+  background: #ffffff;
+}
+
+[data-theme="light"] .logo:hover .logo-text {
+  color: var(--color-frost-glow);
+}
+
+[data-theme="light"] .btn-ghost {
+  background: rgba(15, 23, 42, 0.04);
+  color: var(--color-frost-glow);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.08) inset;
+}
+
+[data-theme="light"] .btn-ghost:hover {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .btn-outline {
+  background: transparent;
+  color: var(--color-frost-glow);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.12) inset;
+}
+
+[data-theme="light"] .btn-outline:hover {
+  background: rgba(15, 23, 42, 0.04);
+}
+
+[data-theme="light"] .btn-icon {
+  background: rgba(15, 23, 42, 0.04);
+  color: var(--color-frost-glow);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.08) inset;
+}
+
+[data-theme="light"] .btn-icon:hover {
+  background: rgba(15, 23, 42, 0.08);
+}
+
+[data-theme="light"] .nav-links a:hover,
+[data-theme="light"] .nav-links a[aria-current="page"] {
+  color: var(--color-frost-glow);
+}
+
+[data-theme="light"] .nav-indicator {
+  background: rgba(15, 23, 42, 0.06);
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06) inset;
+}
+
+[data-theme="light"] .eyebrow-row::before,
+[data-theme="light"] .eyebrow-row::after {
+  background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.12), transparent);
+}
+
+[data-theme="light"] .hero-card-line {
+  background: rgba(15, 23, 42, 0.12);
+}
+
+[data-theme="light"] .hero-stat-divider {
+  background: rgba(15, 23, 42, 0.12);
+}
+
+/* --------------------------------------------------------------------------
+   2. Theme Toggle Button Component (Skiper 26)
+   -------------------------------------------------------------------------- */
+.theme-toggle-cluster {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.theme-toggle-btn {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 6, 15, 0.85);
+  border: 1px solid var(--color-glass-edge);
+  box-shadow: var(--shadow-subtle-3);
+  cursor: pointer;
+  color: var(--color-ice-highlight);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.25s ease,
+              background-color 0.25s ease,
+              border-color 0.25s ease;
+  user-select: none;
+}
+
+[data-theme="light"] .theme-toggle-btn {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.08);
+  box-shadow: var(--shadow-sm);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.94);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-void-violet);
+  outline-offset: 2px;
+}
+
+.theme-toggle-svg {
+  width: 22px;
+  height: 22px;
+  display: block;
+}
+
+/* Dual-rotating SVG parts (Skiper 26 motion) */
+.theme-toggle-inner {
+  transform-origin: 120px 120px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle-outer {
+  transform-origin: 120px 120px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  fill: #ffffff;
+}
+
+[data-theme="light"] .theme-toggle-outer {
+  fill: #0f172a;
+}
+
+.theme-toggle-half-light {
+  fill: #ffffff;
+}
+
+[data-theme="light"] .theme-toggle-half-light {
+  fill: #0f172a;
+}
+
+.theme-toggle-half-dark {
+  fill: #05060f;
+}
+
+[data-theme="light"] .theme-toggle-half-dark {
+  fill: #e2e8f0;
+}
+
+/* Rotation states: isDark vs isLight */
+html:not([data-theme="light"]) .theme-toggle-inner,
+html[data-theme="dark"] .theme-toggle-inner {
+  transform: rotate(-180deg);
+}
+
+html:not([data-theme="light"]) .theme-toggle-outer,
+html[data-theme="dark"] .theme-toggle-outer {
+  transform: rotate(180deg);
+}
+
+html[data-theme="light"] .theme-toggle-inner {
+  transform: rotate(0deg);
+}
+
+html[data-theme="light"] .theme-toggle-outer {
+  transform: rotate(0deg);
+}
+
+/* Options trigger button */
+.theme-options-trigger {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(186, 214, 247, 0.06);
+  border: 1px solid var(--color-glass-edge);
+  color: var(--color-fog-veil);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s, background 0.2s, transform 0.3s ease;
+}
+
+[data-theme="light"] .theme-options-trigger {
+  background: rgba(15, 23, 42, 0.04);
+  border-color: rgba(15, 23, 42, 0.08);
+}
+
+.theme-options-trigger:hover {
+  color: var(--color-ice-highlight);
+  background: rgba(186, 214, 247, 0.12);
+  transform: rotate(60deg);
+}
+
+.theme-options-trigger[aria-expanded="true"] {
+  color: var(--color-void-violet);
+  border-color: var(--color-void-violet);
+}
+
+/* Floating dock theme button styling */
+.floating-dock-icon.theme-toggle-btn {
+  background: var(--color-luminous-fill);
+  border: none;
+}
+
+.floating-dock-icon.theme-toggle-btn .theme-toggle-svg {
+  width: calc(var(--dock-size, 40px) * 0.52);
+  height: calc(var(--dock-size, 40px) * 0.52);
+}
+
+/* --------------------------------------------------------------------------
+   3. Options Panel (Skiper 26 Draggable/Config Panel)
+   -------------------------------------------------------------------------- */
+.theme-options-panel {
+  position: fixed;
+  top: 76px;
+  right: 20px;
+  z-index: 150;
+  width: 270px;
+  background: rgba(10, 12, 22, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(186, 215, 247, 0.15);
+  border-radius: 20px;
+  padding: 14px 16px;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), var(--shadow-subtle-3);
+  color: var(--color-moon-mist);
+  font-family: var(--font-untitled-sans);
+  font-size: 13px;
+  user-select: none;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.96);
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease-glass), transform 0.25s var(--ease-glass);
+}
+
+[data-theme="light"] .theme-options-panel {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(15, 23, 42, 0.12);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(15, 23, 42, 0.05);
+}
+
+.theme-options-panel.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.theme-options-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-glass-edge);
+  cursor: grab;
+}
+
+.theme-options-header:active {
+  cursor: grabbing;
+}
+
+.theme-options-grip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-fog-veil);
+}
+
+.theme-options-title {
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  letter-spacing: 0.02em;
+  color: var(--color-ice-highlight);
+  text-transform: uppercase;
+}
+
+.theme-options-close {
+  background: transparent;
+  border: none;
+  color: var(--color-fog-veil);
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-options-close:hover {
+  color: var(--color-ice-highlight);
+}
+
+.theme-options-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  padding-block: 6px;
+}
+
+.theme-options-label {
+  width: 58px;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: var(--color-fog-veil);
+  padding-top: 3px;
+}
+
+.theme-options-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 4px;
+  flex: 1;
+}
+
+.theme-opt-chip {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 3px 7px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--color-fog-veil);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  line-height: 1.2;
+}
+
+.theme-opt-chip:hover {
+  color: var(--color-ice-highlight);
+  background: rgba(186, 214, 247, 0.08);
+}
+
+[data-theme="light"] .theme-opt-chip:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.theme-opt-chip.is-active {
+  color: #ffffff;
+  background: var(--color-void-violet);
+}
+
+[data-theme="light"] .theme-opt-chip.is-active {
+  color: #ffffff;
+  background: var(--color-void-violet);
+}
+
+.theme-options-footer {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--color-glass-edge);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.theme-options-preview-btn {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 8px;
+  background: rgba(186, 214, 247, 0.08);
+  border: 1px solid var(--color-glass-edge);
+  color: var(--color-ice-highlight);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+[data-theme="light"] .theme-options-preview-btn {
+  background: rgba(15, 23, 42, 0.05);
+}
+
+.theme-options-preview-btn:hover {
+  background: var(--color-void-violet);
+  color: #ffffff;
+  border-color: var(--color-void-violet);
+}
+
+/* --------------------------------------------------------------------------
+   4. Base View Transition Styles Fallback
+   -------------------------------------------------------------------------- */
+::view-transition-group(root) {
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}

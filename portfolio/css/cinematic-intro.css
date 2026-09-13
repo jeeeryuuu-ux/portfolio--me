@@ -1,0 +1,404 @@
+/* ==========================================================================
+   CINEMATIC INTRO SYSTEM
+   First-visit choreography for DEVNESS Portfolio.
+   Builds an atmospheric introduction around the existing live wallpaper.
+   Conforms strictly to DESIGN.md typography, palette, and accessibility.
+   ========================================================================== */
+
+/* ---- Core Intro Container ------------------------------------------------ */
+
+.cinematic-intro {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  z-index: 120;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Hidden immediately on returning visits or when completed */
+html:not(.cinematic-intro-active) .cinematic-intro,
+html.cinematic-intro-done .cinematic-intro {
+  display: none !important;
+}
+
+/* ---- 1. Aperture Layer (Initial deep darkness revealing live wallpaper) --- */
+
+.intro-aperture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  /* Deep cinematic vignette with translucent center so the live wallpaper video
+     is already perceptible underneath from the very first frame. */
+  background: radial-gradient(
+    ellipse 90% 75% at 50% 44%,
+    rgba(5, 6, 15, 0.48) 0%,
+    rgba(5, 6, 15, 0.88) 60%,
+    var(--color-midnight-canvas, #05060f) 100%
+  );
+  opacity: 1;
+  transition: opacity 1300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: opacity;
+}
+
+.cinematic-intro.is-emerging .intro-aperture {
+  opacity: 0;
+}
+
+/* ---- 2. Subtle Cinematic Light Sweep (Requirement #7) -------------------- */
+
+.intro-light-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  mix-blend-mode: screen;
+  background: radial-gradient(
+    900px 320px at 50% 46%,
+    rgba(186, 215, 247, 0.12) 0%,
+    rgba(102, 58, 243, 0.05) 50%,
+    transparent 80%
+  );
+  transform: translateX(-18%) scaleX(1.2);
+  transition: opacity 1100ms ease, transform 1600ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cinematic-intro.is-sweeping .intro-light-sweep {
+  opacity: 1;
+  transform: translateX(12%) scaleX(1);
+}
+
+.cinematic-intro.is-dissolving .intro-light-sweep {
+  opacity: 0;
+  transition: opacity 700ms ease;
+}
+
+/* ---- 3. Studio Identity (DEVNESS) ---------------------------------------- */
+
+.intro-identity {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px) scale(0.98);
+  filter: blur(7px);
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 650ms cubic-bezier(0.16, 1, 0.3, 1),
+              filter 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+.cinematic-intro.is-identity .intro-identity {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+.cinematic-intro.is-dissolving .intro-identity {
+  opacity: 0;
+  transform: translateY(-14px) scale(1.02);
+  filter: blur(5px);
+  transition: opacity 600ms ease, transform 600ms ease, filter 600ms ease;
+}
+
+.intro-brand-name {
+  display: block;
+  font-family: var(--font-aeonikpro, "Space Grotesk", sans-serif);
+  font-size: clamp(26px, 4.2vw, 40px);
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  padding-left: 0.32em; /* Optical centering for letterspaced typography */
+  text-transform: uppercase;
+  color: var(--color-pure-white, #ffffff);
+  background: linear-gradient(180deg, #ffffff 40%, #c7dcf6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 32px rgba(186, 215, 247, 0.2);
+}
+
+.intro-brand-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+  font-family: var(--font-dotdigital, "JetBrains Mono", monospace);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  padding-left: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-blueprint-blue, #b6d9fc);
+  opacity: 0.85;
+}
+
+.intro-brand-sub-line {
+  display: inline-block;
+  width: 22px;
+  height: 1px;
+  background: var(--color-glass-edge, rgba(186, 215, 247, 0.18));
+}
+
+/* ---- 4. Understated Skip Button ------------------------------------------ */
+
+.intro-skip-btn {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  z-index: 10;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-buttons, 9999px);
+  background: rgba(5, 6, 15, 0.65);
+  border: 1px solid var(--color-glass-edge, rgba(186, 215, 247, 0.14));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--color-fog-veil, #9da7ba);
+  font-family: var(--font-dotdigital, "JetBrains Mono", monospace);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 400ms ease, transform 400ms ease, color 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+
+.intro-skip-btn:hover,
+.intro-skip-btn:focus-visible {
+  color: var(--color-pure-white, #ffffff);
+  border-color: rgba(186, 215, 247, 0.35);
+  background: rgba(15, 23, 42, 0.85);
+  outline: none;
+}
+
+.intro-skip-btn kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 6px;
+  font-size: 9px;
+  line-height: 1;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--color-moon-mist, #c7d3ea);
+}
+
+.cinematic-intro.is-ready .intro-skip-btn {
+  opacity: 0.7;
+  transform: translateY(0);
+}
+
+.cinematic-intro.is-ready .intro-skip-btn:hover {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   HERO ORCHESTRATION DURING CINEMATIC INTRO
+   ========================================================================== */
+
+/* While intro is active on first visit, hero items wait for choreographed reveal */
+html.cinematic-intro-active .hero-eyebrow,
+html.cinematic-intro-active .hero h1,
+html.cinematic-intro-active .hero-role,
+html.cinematic-intro-active .hero-tagline,
+html.cinematic-intro-active .hero-cta-row,
+html.cinematic-intro-active .hero-stats,
+html.cinematic-intro-active .hero-cards {
+  opacity: 0;
+  transform: translateY(16px);
+  filter: blur(5px);
+  transition: opacity 750ms var(--ease-glass),
+              transform 750ms var(--ease-glass),
+              filter 750ms var(--ease-glass);
+  will-change: opacity, transform, filter;
+}
+
+/* Staggered emergence as identity dissolves */
+html.cinematic-intro-active.cinematic-intro-revealing .hero-eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-delay: 40ms;
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .hero h1 {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-delay: 140ms;
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .hero-role {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-delay: 240ms;
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .hero-tagline {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-delay: 340ms;
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .hero-cta-row {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-delay: 440ms;
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .hero-stats {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-delay: 540ms;
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .hero-cards {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+  transition-delay: 640ms;
+}
+
+/* Header, floating dock, and audio trigger hold until reveal phase */
+html.cinematic-intro-active .site-header {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+  transition: opacity 750ms var(--ease-glass), transform 750ms var(--ease-glass);
+}
+
+html.cinematic-intro-active .floating-dock {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 750ms var(--ease-glass), transform 750ms var(--ease-glass);
+}
+
+html.cinematic-intro-active .cinematic-audio-trigger {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 750ms var(--ease-glass), transform 750ms var(--ease-glass);
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .site-header,
+html.cinematic-intro-done .site-header {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 500ms;
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .floating-dock,
+html.cinematic-intro-done .floating-dock {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 650ms;
+}
+
+html.cinematic-intro-active.cinematic-intro-revealing .cinematic-audio-trigger,
+html.cinematic-intro-done .cinematic-audio-trigger {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  transition-delay: 700ms;
+}
+
+/* Once intro is marked done, all elements return to canonical default styles */
+html.cinematic-intro-done .hero-eyebrow,
+html.cinematic-intro-done .hero h1,
+html.cinematic-intro-done .hero-role,
+html.cinematic-intro-done .hero-tagline,
+html.cinematic-intro-done .hero-cta-row,
+html.cinematic-intro-done .hero-stats,
+html.cinematic-intro-done .hero-cards {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  transition: none;
+}
+
+/* ---- Mobile Responsiveness ----------------------------------------------- */
+
+@media (max-width: 768px) {
+  .intro-brand-name {
+    font-size: clamp(22px, 6vw, 30px);
+    letter-spacing: 0.28em;
+    padding-left: 0.28em;
+  }
+
+  .intro-brand-sub {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    gap: 8px;
+  }
+
+  .intro-brand-sub-line {
+    width: 14px;
+  }
+
+  .intro-skip-btn {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: 16px;
+    padding: 5px 12px;
+    font-size: 10px;
+  }
+
+  .intro-skip-btn kbd {
+    display: none; /* No physical ESC on touch devices */
+  }
+
+  .intro-light-sweep {
+    display: none; /* Conserve GPU on mobile devices */
+  }
+
+  .intro-identity {
+    filter: blur(4px); /* Lower initial blur for peak frame rate */
+  }
+}
+
+/* ---- Accessibility: Reduced Motion --------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-intro {
+    display: none !important;
+  }
+
+  html.cinematic-intro-active .site-header,
+  html.cinematic-intro-active .floating-dock,
+  html.cinematic-intro-active .cinematic-audio-trigger,
+  html.cinematic-intro-active .hero-eyebrow,
+  html.cinematic-intro-active .hero h1,
+  html.cinematic-intro-active .hero-role,
+  html.cinematic-intro-active .hero-tagline,
+  html.cinematic-intro-active .hero-cta-row,
+  html.cinematic-intro-active .hero-stats,
+  html.cinematic-intro-active .hero-cards {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    pointer-events: auto !important;
+  }
+}

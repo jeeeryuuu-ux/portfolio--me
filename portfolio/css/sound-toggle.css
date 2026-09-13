@@ -1,0 +1,265 @@
+/* ==========================================================================
+   GLOBAL SOUND TOGGLE BUTTON & AUDIO CONTROLS
+   Controls mute/unmute state of hero and section background videos
+   ========================================================================== */
+
+.sound-toggle-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-iconcontainers, 12px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(186, 214, 247, 0.06);
+  border: 1px solid rgba(186, 214, 247, 0.12);
+  box-shadow: var(--shadow-subtle);
+  color: var(--color-frost-glow, #bad6f7);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--duration-fast) var(--ease-standard),
+              border-color var(--duration-fast) var(--ease-standard),
+              color var(--duration-fast) var(--ease-standard),
+              box-shadow var(--duration-fast) var(--ease-standard),
+              transform 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sound-toggle-btn:hover {
+  background: rgba(186, 214, 247, 0.12);
+  border-color: rgba(186, 214, 247, 0.24);
+  color: var(--color-pure-white, #ffffff);
+  transform: translateY(-1px);
+}
+
+.sound-toggle-btn:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.sound-toggle-btn:focus-visible {
+  outline: 2px solid var(--color-glow-cyan, #8ecae6);
+  outline-offset: 2px;
+}
+
+/* Icons */
+.sound-toggle-icon {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sound-icon-muted {
+  position: relative;
+  opacity: 1;
+  transform: scale(1);
+  display: block;
+}
+
+.sound-icon-unmuted {
+  position: absolute;
+  opacity: 0;
+  transform: scale(0.75);
+  display: block;
+}
+
+/* Active unmuted state */
+.sound-toggle-btn.is-unmuted,
+.sound-toggle-btn[aria-pressed="true"] {
+  background: rgba(142, 202, 230, 0.14);
+  border-color: rgba(142, 202, 230, 0.4);
+  color: var(--color-glow-cyan, #8ecae6);
+  box-shadow: 0 0 16px rgba(142, 202, 230, 0.22);
+}
+
+.sound-toggle-btn.is-unmuted:hover,
+.sound-toggle-btn[aria-pressed="true"]:hover {
+  background: rgba(142, 202, 230, 0.22);
+  border-color: rgba(142, 202, 230, 0.55);
+  color: #ffffff;
+}
+
+.sound-toggle-btn.is-unmuted .sound-icon-muted,
+.sound-toggle-btn[aria-pressed="true"] .sound-icon-muted {
+  opacity: 0;
+  transform: scale(0.75);
+}
+
+.sound-toggle-btn.is-unmuted .sound-icon-unmuted,
+.sound-toggle-btn[aria-pressed="true"] .sound-icon-unmuted {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Animated sound waves when unmuted */
+.sound-wave-inner,
+.sound-wave-outer {
+  transform-origin: 11px 12px;
+}
+
+.sound-toggle-btn.is-unmuted .sound-wave-inner,
+.sound-toggle-btn[aria-pressed="true"] .sound-wave-inner {
+  animation: soundWavePulseInner 1.4s infinite ease-in-out;
+}
+
+.sound-toggle-btn.is-unmuted .sound-wave-outer,
+.sound-toggle-btn[aria-pressed="true"] .sound-wave-outer {
+  animation: soundWavePulseOuter 1.4s infinite ease-in-out 0.2s;
+}
+
+@keyframes soundWavePulseInner {
+  0%, 100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes soundWavePulseOuter {
+  0%, 100% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Subtle live audio indicator dot */
+.sound-live-dot {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-glow-cyan, #8ecae6);
+  box-shadow: 0 0 6px var(--color-glow-cyan, #8ecae6);
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.sound-toggle-btn.is-unmuted .sound-live-dot,
+.sound-toggle-btn[aria-pressed="true"] .sound-live-dot {
+  opacity: 1;
+  transform: scale(1);
+  animation: soundLiveGlow 2.2s infinite ease-in-out;
+}
+
+@keyframes soundLiveGlow {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .sound-toggle-btn.is-unmuted .sound-wave-inner,
+  .sound-toggle-btn.is-unmuted .sound-wave-outer,
+  .sound-toggle-btn.is-unmuted .sound-live-dot {
+    animation: none;
+  }
+}
+
+/* Light Theme overrides */
+[data-theme="light"] .sound-toggle-btn {
+  background: rgba(15, 23, 42, 0.05);
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #334155;
+}
+
+[data-theme="light"] .sound-toggle-btn:hover {
+  background: rgba(15, 23, 42, 0.09);
+  border-color: rgba(15, 23, 42, 0.2);
+  color: #0f172a;
+}
+
+[data-theme="light"] .sound-toggle-btn.is-unmuted,
+[data-theme="light"] .sound-toggle-btn[aria-pressed="true"] {
+  background: rgba(14, 116, 144, 0.12);
+  border-color: rgba(14, 116, 144, 0.35);
+  color: #0e7490;
+  box-shadow: 0 0 12px rgba(14, 116, 144, 0.18);
+}
+
+[data-theme="light"] .sound-toggle-btn.is-unmuted:hover,
+[data-theme="light"] .sound-toggle-btn[aria-pressed="true"]:hover {
+  background: rgba(14, 116, 144, 0.18);
+  border-color: rgba(14, 116, 144, 0.45);
+  color: #0c4a6e;
+}
+
+[data-theme="light"] .sound-live-dot {
+  background: #0891b2;
+  box-shadow: 0 0 6px #0891b2;
+}
+
+/* Floating Toast Notification */
+.sound-toast {
+  position: fixed;
+  bottom: 84px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(9, 13, 26, 0.9);
+  border: 1px solid rgba(186, 214, 247, 0.18);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 999px;
+  color: var(--color-frost-glow, #bad6f7);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45), 0 0 1px rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px) scale(0.95);
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sound-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.sound-toast-icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--color-glow-cyan, #8ecae6);
+}
+
+[data-theme="light"] .sound-toast {
+  background: rgba(255, 255, 255, 0.92);
+  border-color: rgba(15, 23, 42, 0.12);
+  color: #1e293b;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15), 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .sound-toast-icon {
+  color: #0891b2;
+}
+
+@media (max-width: 600px) {
+  .sound-toast {
+    bottom: 96px;
+    right: 16px;
+    left: auto;
+  }
+}
